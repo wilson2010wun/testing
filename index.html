@@ -70,6 +70,32 @@
   .card-corner::before { content: ""; position: absolute; top: 8px; left: 8px; width: 18px; height: 18px; border-top: 1px solid var(--gold); border-left: 1px solid var(--gold); opacity: .55; }
   .card-corner::after { content: ""; position: absolute; bottom: 8px; right: 8px; width: 18px; height: 18px; border-bottom: 1px solid var(--gold); border-right: 1px solid var(--gold); opacity: .55; }
 
+  /* Cascade-fade animation for active slide content */
+  .slide.active .fade-up { animation: fadeUp .7s cubic-bezier(.22,.61,.36,1) both; }
+  .slide.active .fade-up.d1 { animation-delay: .08s; }
+  .slide.active .fade-up.d2 { animation-delay: .16s; }
+  .slide.active .fade-up.d3 { animation-delay: .24s; }
+  .slide.active .fade-up.d4 { animation-delay: .32s; }
+  .slide.active .fade-up.d5 { animation-delay: .40s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Phone mockup */
+  .phone {
+    width: 220px; height: 440px;
+    background: linear-gradient(160deg, #1a1033, #0b0717);
+    border: 1.5px solid rgba(212,175,55,.45);
+    border-radius: 36px;
+    padding: 18px 14px;
+    position: relative;
+    box-shadow: 0 0 0 6px rgba(11,7,23,.6), 0 30px 60px -20px rgba(0,0,0,.7), 0 0 60px rgba(212,175,55,.08);
+  }
+  .phone::before { content: ""; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 80px; height: 18px; background: #0b0717; border-radius: 0 0 14px 14px; }
+  .phone::after { content: ""; position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); width: 60px; height: 3px; background: rgba(212,175,55,.4); border-radius: 2px; }
+  .phone-screen { width: 100%; height: 100%; border-radius: 22px; overflow: hidden; position: relative; background: linear-gradient(180deg, rgba(167,139,250,.08), rgba(11,7,23,.9)); }
+
+  /* Persona SVG mark */
+  .persona-mark { width: 56px; height: 56px; }
+
   /* Chips */
   .chip { display: inline-block; padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(212,175,55,.42); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--gold-soft); background: rgba(212,175,55,.06); }
   .chip-solid { background: var(--gold); color: var(--ink); border-color: var(--gold); }
@@ -128,7 +154,7 @@
 <body>
 
 <div class="print-tip">Chrome Print → Landscape A4 → Save as PDF</div>
-<div class="pageno"><span id="cur">1</span> / <span id="total">29</span></div>
+<div class="pageno"><span id="cur">1</span> / <span id="total">30</span></div>
 <div class="nav-hint">← → arrow keys · scroll wheel</div>
 <div class="scroll-indicator" id="dots"></div>
 
@@ -159,16 +185,16 @@
 
   <div class="flex-1 flex items-center justify-between gap-16 mt-2">
     <div class="flex-1 max-w-3xl">
-      <div class="section-eyebrow mb-8">China Mainland Launch · 2026</div>
-      <h1 class="serif text-[68px] leading-[1.05] font-semibold text-gradient-gold glow mb-5">The World's First<br/>Professional-Grade<br/>AI Divination Product</h1>
-      <div class="flex items-center gap-3 mb-6">
+      <div class="section-eyebrow mb-8 fade-up">China Mainland Launch · 2026</div>
+      <h1 class="serif text-[68px] leading-[1.05] font-semibold text-gradient-gold glow mb-5 fade-up d1">The World's First<br/>Professional-Grade<br/>AI Divination Product</h1>
+      <div class="flex items-center gap-3 mb-6 fade-up d2">
         <div class="qline"></div>
         <span class="text-xs tracking-[0.3em] text-amber-200/60 uppercase">China Go-To-Market Strategy</span>
       </div>
-      <p class="serif text-3xl text-amber-200/90 italic">"Ancient Wisdom, Within Reach."</p>
-      <p class="text-sm text-amber-100/55 mt-3 tracking-[0.15em] uppercase">Eastern Wisdom · Reimagined by AI · Companion for the Soul</p>
+      <p class="serif text-3xl text-amber-200/90 italic fade-up d3">"Ancient Wisdom, Within Reach."</p>
+      <p class="text-sm text-amber-100/55 mt-3 tracking-[0.15em] uppercase fade-up d3">Eastern Wisdom · Reimagined by AI · Companion for the Soul</p>
 
-      <div class="mt-12 grid grid-cols-3 gap-0 max-w-xl">
+      <div class="mt-12 grid grid-cols-3 gap-0 max-w-xl fade-up d4">
         <div>
           <div class="text-[10px] text-amber-200/45 tracking-[0.25em] mb-1 uppercase">Audience</div>
           <div class="serif text-base text-amber-100/85">Board · Strategic Investors</div>
@@ -179,21 +205,39 @@
         </div>
         <div class="border-l border-amber-200/15 pl-6">
           <div class="text-[10px] text-amber-200/45 tracking-[0.25em] mb-1 uppercase">Version</div>
-          <div class="serif text-base text-amber-100/85">v2.0 · CN</div>
+          <div class="serif text-base text-amber-100/85">v3.0 · CN</div>
         </div>
       </div>
     </div>
 
-    <div class="flex flex-col items-center">
-      <div class="ring slow-spin">
-        <div class="ring-inner" style="animation: none;">
-          <div class="text-[10px] text-amber-200/60 tracking-[0.3em] mb-2 uppercase">Days to Launch</div>
-          <div class="countdown text-gradient-gold num">30</div>
-          <div class="text-[10px] text-amber-200/60 tracking-[0.3em] mt-2 uppercase">CN Go-Live</div>
+    <div class="flex flex-col items-center fade-up d2">
+      <div class="relative" style="width: 280px; height: 280px;">
+        <!-- Outer rotating bagua trigrams -->
+        <svg class="absolute inset-0 slow-spin" viewBox="0 0 280 280" style="opacity:.55">
+          <g fill="#d4af37" font-family="Cormorant Garamond" font-size="13" letter-spacing="2">
+            <text x="140" y="22" text-anchor="middle">☰</text>
+            <text x="232" y="60" text-anchor="middle">☱</text>
+            <text x="262" y="148" text-anchor="middle">☲</text>
+            <text x="232" y="232" text-anchor="middle">☳</text>
+            <text x="140" y="266" text-anchor="middle">☴</text>
+            <text x="48" y="232" text-anchor="middle">☵</text>
+            <text x="18" y="148" text-anchor="middle">☶</text>
+            <text x="48" y="60" text-anchor="middle">☷</text>
+          </g>
+          <circle cx="140" cy="140" r="118" fill="none" stroke="#d4af37" stroke-width=".6" stroke-dasharray="1 5" opacity=".5"/>
+          <circle cx="140" cy="140" r="100" fill="none" stroke="#d4af37" stroke-width=".4" opacity=".3"/>
+        </svg>
+        <!-- Inner counter ring -->
+        <div class="ring absolute" style="inset: 30px; width: auto; height: auto;">
+          <div class="ring-inner" style="animation: none;">
+            <div class="text-[10px] text-amber-200/60 tracking-[0.3em] mb-2 uppercase">Days to Launch</div>
+            <div class="countdown text-gradient-gold num">30</div>
+            <div class="text-[10px] text-amber-200/60 tracking-[0.3em] mt-2 uppercase">CN Go-Live</div>
+          </div>
         </div>
       </div>
       <div class="mt-7 text-center">
-        <svg viewBox="0 0 260 24" class="w-60 h-5 opacity-70">
+        <svg viewBox="0 0 260 24" class="w-64 h-5 opacity-70">
           <text x="130" y="17" text-anchor="middle" fill="#d4af37" font-family="Cormorant Garamond" font-size="12" letter-spacing="7">HEAVEN · EARTH · HUMAN · HARMONY</text>
         </svg>
       </div>
@@ -203,7 +247,7 @@
   <div class="footer">
     <span>LIUREN AI · Confidential</span>
     <span class="serif italic text-amber-200/60 normal-case tracking-normal">Prepared for Series-A Roadshow</span>
-    <span>2026.04 · 01 / 29</span>
+    <span>2026.04 · 01 / 30</span>
   </div>
 </section>
 
@@ -216,7 +260,7 @@
 
   <div class="flex-1 flex flex-col justify-center max-w-[1280px] mx-auto w-full">
     <div class="section-eyebrow mb-4">One-Page Snapshot</div>
-    <h2 class="serif text-5xl text-gradient-gold leading-tight mb-8">A vertical AI agent for China's<br/>¥800B+ "spiritual consumption" wave.</h2>
+    <h2 class="serif text-5xl text-gradient-gold leading-tight mb-8 fade-up">A vertical AI agent for China's<br/>¥800B+ "spiritual consumption" wave.</h2>
 
     <div class="grid grid-cols-4 gap-5 mb-8">
       <div class="card card-corner">
@@ -263,7 +307,7 @@
     <p class="src text-center mt-5">All figures internal model unless otherwise sourced. Cost basis: USD 6 / 300 inference turns @ current bulk rates. LTV / MAU figures are forward-looking projections, not historical.</p>
   </div>
 
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Executive Summary</span><span>2026.04 · 02 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Executive Summary</span><span>2026.04 · 02 / 30</span></div>
 </section>
 
 <!-- ========== 3 Table of Contents ========== -->
@@ -295,38 +339,39 @@
         <ol class="space-y-2.5 text-base" start="10">
           <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">X.</span><span class="flex-1 text-amber-100">Xiao Liuren · 1,800 Years</span><span class="text-amber-200/40 text-sm num">13</span></li>
           <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XI.</span><span class="flex-1 text-amber-100">Core Features</span><span class="text-amber-200/40 text-sm num">14</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XII.</span><span class="flex-1 text-amber-100">vs. General LLMs</span><span class="text-amber-200/40 text-sm num">15</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XIII.</span><span class="flex-1 text-amber-100">vs. Human Masters</span><span class="text-amber-200/40 text-sm num">16</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XII.</span><span class="flex-1 text-amber-100">Product Walk-Through</span><span class="text-amber-200/40 text-sm num">15</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XIII.</span><span class="flex-1 text-amber-100">vs. General LLMs</span><span class="text-amber-200/40 text-sm num">16</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XIV.</span><span class="flex-1 text-amber-100">vs. Human Masters</span><span class="text-amber-200/40 text-sm num">17</span></li>
         </ol>
       </div>
       <div>
         <div class="section-eyebrow mb-6">Part IV · Business</div>
-        <ol class="space-y-2.5 text-base" start="14">
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XIV.</span><span class="flex-1 text-amber-100">Unit Economics</span><span class="text-amber-200/40 text-sm num">17</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XV.</span><span class="flex-1 text-amber-100">Price Power</span><span class="text-amber-200/40 text-sm num">18</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XVI.</span><span class="flex-1 text-amber-100">12-Month Revenue Forecast</span><span class="text-amber-200/40 text-sm num">19</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XVII.</span><span class="flex-1 text-amber-100">Six Revenue Streams</span><span class="text-amber-200/40 text-sm num">20</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XVIII.</span><span class="flex-1 text-amber-100">Key Assumptions &amp; Sensitivity</span><span class="text-amber-200/40 text-sm num">21</span></li>
+        <ol class="space-y-2.5 text-base" start="15">
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XV.</span><span class="flex-1 text-amber-100">Unit Economics</span><span class="text-amber-200/40 text-sm num">18</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XVI.</span><span class="flex-1 text-amber-100">Price Power</span><span class="text-amber-200/40 text-sm num">19</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XVII.</span><span class="flex-1 text-amber-100">12-Month Revenue Forecast</span><span class="text-amber-200/40 text-sm num">20</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XVIII.</span><span class="flex-1 text-amber-100">Six Revenue Streams</span><span class="text-amber-200/40 text-sm num">21</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XIX.</span><span class="flex-1 text-amber-100">Key Assumptions &amp; Sensitivity</span><span class="text-amber-200/40 text-sm num">22</span></li>
         </ol>
         <div class="section-eyebrow mt-9 mb-5">Part V · Execution</div>
-        <ol class="space-y-2.5 text-base" start="19">
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XIX.</span><span class="flex-1 text-amber-100">Multi-Surface Rollout</span><span class="text-amber-200/40 text-sm num">22</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XX.</span><span class="flex-1 text-amber-100">Cold-Start Funnel</span><span class="text-amber-200/40 text-sm num">23</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXI.</span><span class="flex-1 text-amber-100">Compliance &amp; Risk</span><span class="text-amber-200/40 text-sm num">24</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXII.</span><span class="flex-1 text-amber-100">Risk Register</span><span class="text-amber-200/40 text-sm num">25</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXIII.</span><span class="flex-1 text-amber-100">Five-Layered Moat</span><span class="text-amber-200/40 text-sm num">26</span></li>
+        <ol class="space-y-2.5 text-base" start="20">
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XX.</span><span class="flex-1 text-amber-100">Multi-Surface Rollout</span><span class="text-amber-200/40 text-sm num">23</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXI.</span><span class="flex-1 text-amber-100">Cold-Start Funnel</span><span class="text-amber-200/40 text-sm num">24</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXII.</span><span class="flex-1 text-amber-100">Compliance &amp; Risk</span><span class="text-amber-200/40 text-sm num">25</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXIII.</span><span class="flex-1 text-amber-100">Risk Register</span><span class="text-amber-200/40 text-sm num">26</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXIV.</span><span class="flex-1 text-amber-100">Five-Layered Moat</span><span class="text-amber-200/40 text-sm num">27</span></li>
         </ol>
         <div class="section-eyebrow mt-9 mb-5">Part VI · Close</div>
-        <ol class="space-y-2.5 text-base" start="24">
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXIV.</span><span class="flex-1 text-amber-100">Roadmap</span><span class="text-amber-200/40 text-sm num">27</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXV.</span><span class="flex-1 text-amber-100">Team &amp; The Ask</span><span class="text-amber-200/40 text-sm num">28</span></li>
-          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXVI.</span><span class="flex-1 text-amber-100">Thank You</span><span class="text-amber-200/40 text-sm num">29</span></li>
+        <ol class="space-y-2.5 text-base" start="25">
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXV.</span><span class="flex-1 text-amber-100">Roadmap</span><span class="text-amber-200/40 text-sm num">28</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXVI.</span><span class="flex-1 text-amber-100">Team &amp; The Ask</span><span class="text-amber-200/40 text-sm num">29</span></li>
+          <li class="flex items-baseline gap-4"><span class="serif gold w-9 text-sm">XXVII.</span><span class="flex-1 text-amber-100">Thank You</span><span class="text-amber-200/40 text-sm num">30</span></li>
         </ol>
       </div>
     </div>
   </div>
 
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Table of Contents</span><span>2026.04 · 03 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Table of Contents</span><span>2026.04 · 03 / 30</span></div>
 </section>
 
 <!-- ========== 4 Vision ========== -->
@@ -339,7 +384,7 @@
   <div class="flex-1 flex items-center justify-center text-center">
     <div class="max-w-4xl">
       <div class="section-eyebrow mb-10 justify-center" style="display:flex">Our Vision</div>
-      <h2 class="serif text-[58px] leading-[1.1] text-gradient-gold glow mb-10">To become young China's<br/>always-on AI confidant.</h2>
+      <h2 class="serif text-[58px] leading-[1.1] text-gradient-gold glow mb-10 fade-up">To become young China's<br/>always-on AI confidant.</h2>
       <p class="text-xl leading-relaxed text-amber-100/85">
         Rooted in <span class="hl">1,800 years</span> of Xiao Liuren wisdom, powered by <span class="hl">large language models</span>,<br/>
         every doubt and every heartbeat finds<br/>
@@ -365,7 +410,7 @@
       </div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter I · Vision</span><span>2026.04 · 04 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter I · Vision</span><span>2026.04 · 04 / 30</span></div>
 </section>
 
 <!-- ========== 5 The Problem ========== -->
@@ -377,7 +422,7 @@
 
   <div class="flex-1 flex flex-col justify-center max-w-[1280px] mx-auto w-full">
     <div class="section-eyebrow mb-4">The Problem We Solve</div>
-    <h2 class="serif text-5xl text-gradient-gold leading-tight mb-10 max-w-4xl">Young China is anxious, expressive,<br/>and structurally under-served.</h2>
+    <h2 class="serif text-5xl text-gradient-gold leading-tight mb-10 max-w-4xl fade-up">Young China is anxious, expressive,<br/>and structurally under-served.</h2>
 
     <div class="grid grid-cols-3 gap-6">
       <div class="card card-corner">
@@ -418,7 +463,7 @@
     <p class="src text-center mt-6">Sources: Huang et al., <em>Lancet Psychiatry</em> 2019 (national mental-health survey); WHO China Mental-Health profile; Frost &amp; Sullivan / iResearch industry reports 2023–2024. Industry size figures are third-party estimates.</p>
   </div>
 
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter II · The Problem</span><span>2026.04 · 05 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter II · The Problem</span><span>2026.04 · 05 / 30</span></div>
 </section>
 <!-- ========== 6 Positioning ========== -->
 <section class="slide">
@@ -430,7 +475,7 @@
   <div class="flex-1 flex flex-col justify-center max-w-[1280px] mx-auto w-full">
     <div class="text-center mb-10">
       <div class="section-eyebrow mb-4 justify-center" style="display:inline-flex">One-Line Pitch</div>
-      <h2 class="serif text-[52px] text-gradient-gold glow leading-tight">Your AI companion for heart &amp; heritage.</h2>
+      <h2 class="serif text-[52px] text-gradient-gold glow leading-tight fade-up">Your AI companion for heart &amp; heritage.</h2>
       <div class="qline-c mx-auto mt-5"></div>
     </div>
 
@@ -462,7 +507,7 @@
       <div class="px-4 py-5 text-center border-l border-amber-200/15"><div class="serif stat text-4xl text-gradient-gold num">~3s</div><div class="text-[10px] text-amber-200/55 mt-2 uppercase tracking-widest">Time to reading</div></div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter III · Positioning</span><span>2026.04 · 06 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter III · Positioning</span><span>2026.04 · 06 / 30</span></div>
 </section>
 
 <!-- ========== 7 Core Values ========== -->
@@ -479,7 +524,7 @@
     </div>
     <div class="space-y-5">
       <div class="section-eyebrow mb-1">What we deliver</div>
-      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-2">Three things our users<br/>can't get anywhere else.</h2>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-2 fade-up">Three things our users<br/>can't get anywhere else.</h2>
       <div class="card card-corner">
         <div class="flex items-center gap-3 mb-2"><span class="serif text-2xl gold">Cultural</span><span class="chip">Heritage</span></div>
         <p class="text-sm text-amber-100/80 leading-relaxed">The six-spirit Xiao Liuren system — Da-An / Liu-Lian / Su-Xi / Chi-Kou / Xiao-Ji / Kong-Wang — fused with an I-Ching knowledge graph. <span class="hl">Classical wisdom in a contemporary voice.</span></p>
@@ -494,7 +539,7 @@
       </div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter IV · Core Values</span><span>2026.04 · 07 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter IV · Core Values</span><span>2026.04 · 07 / 30</span></div>
 </section>
 
 <!-- ========== 8 Personas ========== -->
@@ -507,12 +552,18 @@
   <div class="flex-1 flex flex-col justify-center max-w-[1320px] mx-auto w-full">
     <div class="text-center mb-9">
       <div class="section-eyebrow mb-3 justify-center" style="display:inline-flex">Four core segments in China</div>
-      <h2 class="serif text-4xl text-gradient-gold">Who pays for "Eastern wisdom × AI care"?</h2>
+      <h2 class="serif text-4xl text-gradient-gold fade-up">Who pays for "Eastern wisdom × AI care"?</h2>
     </div>
 
     <div class="grid grid-cols-4 gap-5">
       <div class="card card-corner">
-        <div class="text-3xl mb-3">🎓</div>
+        <svg class="persona-mark mb-3" viewBox="0 0 56 56" fill="none">
+          <circle cx="28" cy="28" r="26" stroke="#d4af37" stroke-width=".8" opacity=".4"/>
+          <circle cx="28" cy="22" r="6" stroke="#d4af37" stroke-width="1.2"/>
+          <path d="M14 44 c0-8 6-14 14-14 s14 6 14 14" stroke="#d4af37" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M20 14 L28 10 L36 14 L36 18 Q28 22 20 18 Z" fill="#d4af37" opacity=".7"/>
+          <line x1="36" y1="14" x2="40" y2="20" stroke="#d4af37" stroke-width="1"/>
+        </svg>
         <div class="serif text-xl text-amber-100 mb-1">Anxious Gen-Z</div>
         <div class="text-[10px] text-amber-200/55 mb-4 tracking-widest uppercase">Age 18–26 · Students &amp; early career</div>
         <ul class="text-xs space-y-1.5 text-amber-100/75">
@@ -523,7 +574,13 @@
         <div class="mt-3 pt-3 border-t border-amber-200/15"><div class="text-[10px] text-amber-200/45 uppercase tracking-widest">Cohort size</div><div class="serif text-2xl gold num">~260M</div></div>
       </div>
       <div class="card card-strong card-corner">
-        <div class="text-3xl mb-3">💼</div>
+        <svg class="persona-mark mb-3" viewBox="0 0 56 56" fill="none">
+          <circle cx="28" cy="28" r="26" stroke="#d4af37" stroke-width=".8" opacity=".55"/>
+          <rect x="14" y="22" width="28" height="20" rx="2" stroke="#d4af37" stroke-width="1.2"/>
+          <path d="M22 22 V18 a2 2 0 0 1 2-2 h8 a2 2 0 0 1 2 2 V22" stroke="#d4af37" stroke-width="1.2"/>
+          <line x1="14" y1="32" x2="42" y2="32" stroke="#d4af37" stroke-width=".8" opacity=".6"/>
+          <circle cx="28" cy="32" r="2" fill="#d4af37"/>
+        </svg>
         <div class="serif text-xl text-amber-100 mb-1">Urban White-Collar</div>
         <div class="text-[10px] text-amber-200/55 mb-4 tracking-widest uppercase">Age 25–40 · Tier-1 &amp; New-Tier-1</div>
         <ul class="text-xs space-y-1.5 text-amber-100/85">
@@ -534,7 +591,14 @@
         <div class="mt-3 pt-3 border-t border-amber-200/25"><div class="text-[10px] text-amber-200/55 uppercase tracking-widest">Cohort size · ARPPU</div><div class="serif text-2xl gold num">~140M / Top</div></div>
       </div>
       <div class="card card-corner">
-        <div class="text-3xl mb-3">🍼</div>
+        <svg class="persona-mark mb-3" viewBox="0 0 56 56" fill="none">
+          <circle cx="28" cy="28" r="26" stroke="#d4af37" stroke-width=".8" opacity=".4"/>
+          <path d="M22 14 Q28 8 34 14" stroke="#d4af37" stroke-width="1.2" stroke-linecap="round"/>
+          <circle cx="22" cy="22" r="5" stroke="#d4af37" stroke-width="1.2"/>
+          <circle cx="34" cy="20" r="3.5" stroke="#d4af37" stroke-width="1.2"/>
+          <path d="M14 44 c0-7 5-12 12-12 c2 0 4 .5 6 1.5" stroke="#d4af37" stroke-width="1.2" stroke-linecap="round"/>
+          <path d="M30 38 c0-4 3-7 7-7 c4 0 7 3 7 7" stroke="#d4af37" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
         <div class="serif text-xl text-amber-100 mb-1">Urban Moms</div>
         <div class="text-[10px] text-amber-200/55 mb-4 tracking-widest uppercase">Age 28–42 · Caregiving stress</div>
         <ul class="text-xs space-y-1.5 text-amber-100/75">
@@ -545,7 +609,13 @@
         <div class="mt-3 pt-3 border-t border-amber-200/15"><div class="text-[10px] text-amber-200/45 uppercase tracking-widest">Cohort size</div><div class="serif text-2xl gold num">~70M</div></div>
       </div>
       <div class="card card-corner">
-        <div class="text-3xl mb-3">🌾</div>
+        <svg class="persona-mark mb-3" viewBox="0 0 56 56" fill="none">
+          <circle cx="28" cy="28" r="26" stroke="#d4af37" stroke-width=".8" opacity=".4"/>
+          <path d="M28 12 V44" stroke="#d4af37" stroke-width="1.2"/>
+          <path d="M28 18 Q22 18 20 22 Q24 24 28 22 M28 24 Q22 24 20 28 Q24 30 28 28 M28 30 Q22 30 20 34 Q24 36 28 34" stroke="#d4af37" stroke-width="1" fill="none"/>
+          <path d="M28 18 Q34 18 36 22 Q32 24 28 22 M28 24 Q34 24 36 28 Q32 30 28 28 M28 30 Q34 30 36 34 Q32 36 28 34" stroke="#d4af37" stroke-width="1" fill="none"/>
+          <ellipse cx="28" cy="14" rx="3" ry="2" fill="#d4af37" opacity=".7"/>
+        </svg>
         <div class="serif text-xl text-amber-100 mb-1">Lower-Tier Silver</div>
         <div class="text-[10px] text-amber-200/55 mb-4 tracking-widest uppercase">Age 45–65 · Tier-3/4 &amp; counties</div>
         <ul class="text-xs space-y-1.5 text-amber-100/75">
@@ -569,7 +639,7 @@
     </div>
     <p class="src text-center mt-3">Cohort sizes from CNNIC 51st Internet Statistics Report (Q4 2024) and National Bureau of Statistics. ARPPU labels are internal model.</p>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter V · Personas</span><span>2026.04 · 08 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter V · Personas</span><span>2026.04 · 08 / 30</span></div>
 </section>
 <!-- ========== 9 Mental Health ========== -->
 <section class="slide">
@@ -581,7 +651,7 @@
   <div class="flex-1 grid grid-cols-2 gap-12 items-center max-w-[1320px] mx-auto w-full">
     <div>
       <div class="section-eyebrow mb-3">The silent epidemic</div>
-      <h2 class="serif text-[44px] text-gradient-gold leading-[1.1] mb-7">~95 million Chinese are<br/>waiting for a non-judgemental<br/>listener.</h2>
+      <h2 class="serif text-[44px] text-gradient-gold leading-[1.1] mb-7 fade-up">~95 million Chinese are<br/>waiting for a non-judgemental<br/>listener.</h2>
       <div class="space-y-3.5">
         <div class="card card-corner flex items-center gap-5">
           <div class="serif stat text-5xl text-gradient-gold w-40 num">~95<span class="text-2xl">M</span></div>
@@ -603,7 +673,7 @@
       <p class="src text-center mt-2">Log scale. Counselor-supply &amp; penetration figures from WHO China Mental Health Atlas; symptom prevalence from <em>Lancet Psychiatry</em>.</p>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter VI · Mental Health</span><span>2026.04 · 09 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter VI · Mental Health</span><span>2026.04 · 09 / 30</span></div>
 </section>
 
 <!-- ========== 10 Mystic Economy ========== -->
@@ -616,7 +686,7 @@
   <div class="flex-1 grid grid-cols-5 gap-10 items-stretch max-w-[1320px] mx-auto w-full">
     <div class="col-span-2 flex flex-col justify-center">
       <div class="section-eyebrow mb-3">A ¥100B-class category</div>
-      <h2 class="serif text-[42px] text-gradient-gold leading-[1.1] mb-7">An underestimated<br/><span class="text-amber-100">¥100B-class</span> spiritual-spend market.</h2>
+      <h2 class="serif text-[42px] text-gradient-gold leading-[1.1] mb-7 fade-up">An underestimated<br/><span class="text-amber-100">¥100B-class</span> spiritual-spend market.</h2>
       <div class="card card-corner mb-4">
         <div class="text-[10px] gold tracking-[0.3em] uppercase mb-1">Pan-mystic market <span class="est-pill">est.</span></div>
         <div class="serif stat text-5xl text-gradient-gold num">¥120B</div>
@@ -633,7 +703,7 @@
       <p class="src text-center mt-2">Industry size = third-party estimate. Penetration = % of Gen-Z (born 1995–2009) who report &gt; ¥500 annual mystic spend.</p>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter VII · Pan-Mystic Economy</span><span>2026.04 · 10 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter VII · Pan-Mystic Economy</span><span>2026.04 · 10 / 30</span></div>
 </section>
 
 <!-- ========== 11 Cultural Revival ========== -->
@@ -646,7 +716,7 @@
   <div class="flex-1 grid grid-cols-2 gap-10 max-w-[1320px] mx-auto w-full">
     <div class="flex flex-col justify-center">
       <div class="section-eyebrow mb-3">Guochao wave</div>
-      <h2 class="serif text-[40px] text-gradient-gold leading-[1.1] mb-7">Guochao × I-Ching is young China's<br/>new spiritual consumption.</h2>
+      <h2 class="serif text-[40px] text-gradient-gold leading-[1.1] mb-7 fade-up">Guochao × I-Ching is young China's<br/>new spiritual consumption.</h2>
       <div class="space-y-2.5">
         <div class="card card-corner"><span class="serif gold">📚 Zhihu</span> · "I-Ching" topic <span class="hl">2.8M</span> followers · monthly reads <span class="hl">90M+</span> <span class="src-inline">(platform-disclosed)</span></div>
         <div class="card card-corner"><span class="serif gold">📺 Bilibili</span> · top "I-Ching / Liuren" video peaked at <span class="hl">8.1M</span> views <span class="src-inline">(creator analytics)</span></div>
@@ -660,7 +730,7 @@
       <p class="src text-center mt-2">Y-axis log scale. Platform metrics as of Q4 2024; cross-platform numbers are not directly comparable.</p>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter VIII · Guochao Tailwind</span><span>2026.04 · 11 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter VIII · Guochao Tailwind</span><span>2026.04 · 11 / 30</span></div>
 </section>
 
 <!-- ========== 12 Competitive Landscape ========== -->
@@ -674,7 +744,7 @@
     <div class="grid grid-cols-2 gap-10">
       <div>
         <div class="section-eyebrow mb-3">Two-axis positioning</div>
-        <h2 class="serif text-[34px] text-gradient-gold mb-6 leading-tight">On the Expertise × AI-Native axes,<br/>we sit in open territory.</h2>
+        <h2 class="serif text-[34px] text-gradient-gold mb-6 leading-tight fade-up">On the Expertise × AI-Native axes,<br/>we sit in open territory.</h2>
         <table class="cmp">
           <thead>
             <tr><th>Player</th><th>Type</th><th>Price</th><th>Pain point</th></tr>
@@ -696,7 +766,7 @@
       </div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter IX · Competition</span><span>2026.04 · 12 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter IX · Competition</span><span>2026.04 · 12 / 30</span></div>
 </section>
 <!-- ========== 13 Xiao Liuren 101 ========== -->
 <section class="slide">
@@ -708,7 +778,7 @@
   <div class="flex-1 grid grid-cols-5 gap-8 items-center">
     <div class="col-span-2">
       <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">XIAO · LIUREN · 101</div>
-      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-4">A reading in three seconds.<br/>The cosmos in your palm.</h2>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-4 fade-up">A reading in three seconds.<br/>The cosmos in your palm.</h2>
       <p class="text-sm text-amber-100/85 leading-relaxed">Xiao Liuren — also called <span class="hl">"Zhuge's Saddle Reading"</span> — is attributed to strategist Zhuge Liang, popularised in the Tang–Song eras, and has endured for <span class="hl">1,800+ years</span>. It needs only the <span class="hl">month, day and hour</span> to cast — the simplest, most popular folk divination tradition in China.</p>
       <div class="qline my-5"></div>
       <div class="grid grid-cols-2 gap-3">
@@ -739,7 +809,7 @@
       </div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter X · Xiao Liuren</span><span>2026.04 · 13 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter X · Xiao Liuren</span><span>2026.04 · 13 / 30</span></div>
 </section>
 
 <!-- ========== 14 Features ========== -->
@@ -751,7 +821,7 @@
 
   <div class="flex-1 flex flex-col justify-center">
     <div class="text-center mb-8">
-      <h2 class="serif text-4xl text-gradient-gold mb-2">Four Core-Feature Pillars</h2>
+      <h2 class="serif text-4xl text-gradient-gold mb-2 fade-up">Four Core-Feature Pillars</h2>
       <p class="text-sm text-amber-200/65 tracking-widest">FROM · QUESTION · TO · HEALING</p>
     </div>
 
@@ -804,20 +874,156 @@
       <div class="card text-center"><div class="serif text-3xl text-gradient-gold">∞ turns</div><div class="text-xs text-amber-200/65 mt-1 tracking-widest">UNLIMITED FOLLOW-UPS</div></div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XI · Features</span><span>2026.04 · 14 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XI · Features</span><span>2026.04 · 14 / 30</span></div>
 </section>
 
-<!-- ========== 15 vs LLMs ========== -->
+<!-- ========== 15 Product Showcase ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XII · vs. General LLMs</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XII · Product · A 60-Second Walk-Through</span></div>
+    <div class="chip">Page 15 · UX</div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center max-w-[1320px] mx-auto w-full">
+    <div class="text-center mb-8 fade-up">
+      <div class="section-eyebrow mb-3 justify-center" style="display:inline-flex">From a question to peace of mind, in three taps</div>
+      <h2 class="serif text-[40px] text-gradient-gold leading-tight fade-up">What it actually feels like to use.</h2>
+    </div>
+
+    <div class="flex items-end justify-center gap-12">
+      <!-- Phone 1: Ask -->
+      <div class="text-center fade-up d1">
+        <div class="phone mx-auto">
+          <div class="phone-screen">
+            <svg viewBox="0 0 192 408" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <!-- status bar -->
+              <text x="14" y="22" font-family="Inter" font-size="9" fill="#d4af37" font-weight="600">9:41</text>
+              <circle cx="170" cy="20" r="3" fill="#d4af37" opacity=".6"/>
+              <rect x="155" y="17" width="12" height="6" rx="1" fill="none" stroke="#d4af37" stroke-width=".7" opacity=".6"/>
+              <!-- header -->
+              <text x="96" y="56" text-anchor="middle" font-family="Cormorant Garamond" font-size="14" fill="#d4af37" letter-spacing="3">LIUREN AI</text>
+              <line x1="60" y1="68" x2="132" y2="68" stroke="#d4af37" stroke-width=".5" opacity=".4"/>
+              <!-- prompt card -->
+              <rect x="14" y="92" width="164" height="120" rx="12" fill="rgba(212,175,55,0.06)" stroke="rgba(212,175,55,0.3)" stroke-width=".7"/>
+              <text x="26" y="112" font-family="Inter" font-size="8.5" fill="#e8c970" font-weight="600">Ask the cosmos</text>
+              <text x="26" y="132" font-family="Inter" font-size="7.5" fill="#f4ecd8" opacity=".75">Should I take the offer</text>
+              <text x="26" y="144" font-family="Inter" font-size="7.5" fill="#f4ecd8" opacity=".75">from the Shanghai team?</text>
+              <text x="26" y="156" font-family="Inter" font-size="7.5" fill="#f4ecd8" opacity=".75">It pays more but I'd</text>
+              <text x="26" y="168" font-family="Inter" font-size="7.5" fill="#f4ecd8" opacity=".75">leave my mentor.</text>
+              <rect x="26" y="180" width="80" height="20" rx="10" fill="rgba(212,175,55,0.2)" stroke="rgba(212,175,55,0.5)" stroke-width=".7"/>
+              <text x="66" y="194" text-anchor="middle" font-family="Inter" font-size="7.5" fill="#d4af37" font-weight="600">Cast hexagram →</text>
+              <!-- coin animation -->
+              <g transform="translate(96 280)">
+                <circle r="38" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width=".7" stroke-dasharray="2 3"/>
+                <circle r="26" fill="none" stroke="rgba(212,175,55,0.4)" stroke-width=".7"/>
+                <circle r="14" fill="rgba(212,175,55,0.18)" stroke="#d4af37" stroke-width=".8"/>
+                <text y="3" text-anchor="middle" font-family="Cormorant Garamond" font-size="9" fill="#d4af37">月日時</text>
+              </g>
+              <!-- footer hint -->
+              <text x="96" y="370" text-anchor="middle" font-family="Inter" font-size="6.5" fill="#f4ecd8" opacity=".4" letter-spacing="1.5">FOR ENTERTAINMENT ONLY</text>
+            </svg>
+          </div>
+        </div>
+        <div class="serif text-amber-100 text-lg mt-6">① Ask</div>
+        <div class="text-[10px] text-amber-200/55 tracking-[0.25em] uppercase mt-1">3-Second Cast</div>
+      </div>
+
+      <!-- Phone 2: Reading -->
+      <div class="text-center fade-up d2">
+        <div class="phone mx-auto" style="border-color: rgba(212,175,55,.7); box-shadow: 0 0 0 6px rgba(11,7,23,.6), 0 30px 60px -20px rgba(0,0,0,.7), 0 0 90px rgba(212,175,55,.18);">
+          <div class="phone-screen">
+            <svg viewBox="0 0 192 408" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <text x="14" y="22" font-family="Inter" font-size="9" fill="#d4af37" font-weight="600">9:41</text>
+              <text x="96" y="56" text-anchor="middle" font-family="Cormorant Garamond" font-size="14" fill="#d4af37" letter-spacing="3">YOUR HEXAGRAM</text>
+              <line x1="60" y1="68" x2="132" y2="68" stroke="#d4af37" stroke-width=".5" opacity=".4"/>
+              <!-- big hexagram name -->
+              <text x="96" y="110" text-anchor="middle" font-family="Cormorant Garamond" font-size="34" fill="url(#g1)" font-weight="700">速 喜</text>
+              <defs>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#f3d56a"/><stop offset="1" stop-color="#b8860b"/>
+                </linearGradient>
+              </defs>
+              <text x="96" y="128" text-anchor="middle" font-family="Inter" font-size="9" fill="#e8c970" letter-spacing="3">SU-XI · FAST JOY</text>
+              <!-- 3 stripes for hexagram -->
+              <g transform="translate(58 144)">
+                <rect x="0" y="0" width="76" height="6" fill="#d4af37" opacity=".7"/>
+                <rect x="0" y="12" width="34" height="6" fill="#d4af37" opacity=".7"/>
+                <rect x="42" y="12" width="34" height="6" fill="#d4af37" opacity=".7"/>
+                <rect x="0" y="24" width="76" height="6" fill="#d4af37" opacity=".7"/>
+              </g>
+              <!-- AI reading text -->
+              <rect x="14" y="200" width="164" height="170" rx="12" fill="rgba(167,139,250,0.08)" stroke="rgba(212,175,55,0.25)" stroke-width=".5"/>
+              <text x="26" y="220" font-family="Inter" font-size="8" fill="#e8c970" font-weight="600">The cosmos says</text>
+              <text x="26" y="238" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">Joy is arriving — but it</text>
+              <text x="26" y="250" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">comes from movement,</text>
+              <text x="26" y="262" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">not from staying still.</text>
+              <text x="26" y="280" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">The mentor bond is</text>
+              <text x="26" y="292" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">already an asset; it</text>
+              <text x="26" y="304" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">does not vanish with</text>
+              <text x="26" y="316" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">distance. Trust the</text>
+              <text x="26" y="328" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">door that's opening.</text>
+              <text x="26" y="356" font-family="Inter" font-size="7" fill="#d4af37" opacity=".9" font-weight="600">— how does this land?</text>
+            </svg>
+          </div>
+        </div>
+        <div class="serif text-amber-100 text-lg mt-6">② Reading</div>
+        <div class="text-[10px] text-amber-200/55 tracking-[0.25em] uppercase mt-1">Grounded · Specific</div>
+      </div>
+
+      <!-- Phone 3: Multi-turn -->
+      <div class="text-center fade-up d3">
+        <div class="phone mx-auto">
+          <div class="phone-screen">
+            <svg viewBox="0 0 192 408" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+              <text x="14" y="22" font-family="Inter" font-size="9" fill="#d4af37" font-weight="600">9:41</text>
+              <text x="96" y="56" text-anchor="middle" font-family="Cormorant Garamond" font-size="13" fill="#d4af37" letter-spacing="2">FOLLOW · UP</text>
+              <line x1="60" y1="68" x2="132" y2="68" stroke="#d4af37" stroke-width=".5" opacity=".4"/>
+              <!-- chat bubbles -->
+              <rect x="40" y="88" width="138" height="40" rx="14" fill="rgba(167,139,250,0.15)" stroke="rgba(167,139,250,0.3)" stroke-width=".5"/>
+              <text x="50" y="104" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".9">But what about the</text>
+              <text x="50" y="116" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".9">timing? End of Q4?</text>
+              <rect x="14" y="138" width="150" height="56" rx="14" fill="rgba(212,175,55,0.1)" stroke="rgba(212,175,55,0.3)" stroke-width=".5"/>
+              <text x="24" y="156" font-family="Inter" font-size="7" fill="#e8c970" font-weight="600">Su-Xi favours speed.</text>
+              <text x="24" y="170" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">Move within 30 days or</text>
+              <text x="24" y="182" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">the energy fades. Q4 is</text>
+              <text x="24" y="194" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">past the window.</text>
+              <rect x="40" y="206" width="138" height="28" rx="14" fill="rgba(167,139,250,0.15)" stroke="rgba(167,139,250,0.3)" stroke-width=".5"/>
+              <text x="50" y="224" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".9">I'm scared to tell my</text>
+              <text x="50" y="234" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".9">mentor though.</text>
+              <rect x="14" y="244" width="160" height="80" rx="14" fill="rgba(110,231,183,0.08)" stroke="rgba(110,231,183,0.3)" stroke-width=".5"/>
+              <text x="24" y="262" font-family="Inter" font-size="7" fill="#6ee7b7" font-weight="600">[ noticing emotion ]</text>
+              <text x="24" y="278" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">Fear of disappointing</text>
+              <text x="24" y="290" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">someone who invested</text>
+              <text x="24" y="302" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">in you is itself a sign of</text>
+              <text x="24" y="314" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".85">how rooted you are.</text>
+              <!-- input bar -->
+              <rect x="14" y="346" width="164" height="26" rx="13" fill="rgba(11,7,23,.7)" stroke="rgba(212,175,55,0.25)" stroke-width=".5"/>
+              <text x="26" y="362" font-family="Inter" font-size="7" fill="#f4ecd8" opacity=".4">Ask anything…</text>
+              <circle cx="166" cy="359" r="7" fill="#d4af37"/>
+            </svg>
+          </div>
+        </div>
+        <div class="serif text-amber-100 text-lg mt-6">③ Follow-up</div>
+        <div class="text-[10px] text-amber-200/55 tracking-[0.25em] uppercase mt-1">Multi-Turn · Empathic</div>
+      </div>
+    </div>
+
+    <p class="src text-center mt-8">Mockups are illustrative renderings of shipped flows. Compliance disclaimer ("for entertainment only") is persistent on every screen.</p>
+  </div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XII · Product Walk-Through</span><span>2026.04 · 15 / 30</span></div>
+</section>
+
+<!-- ========== 16 vs LLMs ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XIII · vs. General LLMs</span></div>
     <div class="chip">Page 15</div>
   </div>
 
   <div class="flex-1 grid grid-cols-2 gap-8 items-center">
     <div>
       <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">VERTICAL · BEATS · GENERAL</div>
-      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-6">Where general LLMs hedge,<br/>we answer with authority.</h2>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-6 fade-up">Where general LLMs hedge,<br/>we answer with authority.</h2>
       <p class="text-sm text-amber-100/80 leading-relaxed mb-4">General LLMs trained on web-scale corpora <span class="hl">know almost nothing</span> of the Liuren six-spirit system, casting rules, or generation–conquest relations. Their "no-superstition" alignment further pushes them to <span class="hl">refuse or generalise</span>.</p>
       <p class="text-sm text-amber-100/80 leading-relaxed mb-6">We fine-tune 7B / 13B models on <span class="hl">150K Liuren classical-text passages + 80K master-annotated cases + RLHF emotional alignment</span>.</p>
       <table class="cmp">
@@ -833,19 +1039,19 @@
     </div>
     <div class="chart-box h-[500px]"><canvas id="llmCompare"></canvas></div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XII · vs LLMs</span><span>2026.04 · 15 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XIII · vs LLMs</span><span>2026.04 · 16 / 30</span></div>
 </section>
 
 <!-- ========== 16 vs Human Masters ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XIII · vs. Human Masters</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XIV · vs. Human Masters</span></div>
     <div class="chip">Page 16</div>
   </div>
 
   <div class="flex-1 grid grid-cols-3 gap-8 items-stretch">
     <div class="col-span-2">
-      <h2 class="serif text-3xl text-gradient-gold leading-tight mb-5">Human masters aren't competitors —<br/>they are our <span class="text-amber-100">teachers.</span></h2>
+      <h2 class="serif text-3xl text-gradient-gold leading-tight mb-5 fade-up">Human masters aren't competitors —<br/>they are our <span class="text-amber-100">teachers.</span></h2>
       <table class="cmp">
         <thead><tr><th>Dimension</th><th>Human master</th><th>Liuren AI</th></tr></thead>
         <tbody>
@@ -878,20 +1084,20 @@
       </div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XIII · vs Human Masters</span><span>2026.04 · 16 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XIV · vs Human Masters</span><span>2026.04 · 17 / 30</span></div>
 </section>
 
 <!-- ========== 17 Unit Economics ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XIV · Unit Economics</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XV · Unit Economics</span></div>
     <div class="chip">Page 17</div>
   </div>
 
   <div class="flex-1 grid grid-cols-2 gap-12 items-center max-w-[1320px] mx-auto w-full">
     <div>
       <div class="section-eyebrow mb-3">Per-reading P&amp;L</div>
-      <h2 class="serif text-[44px] text-gradient-gold leading-[1.1] mb-5">Every reading is<br/>deterministic cash flow.</h2>
+      <h2 class="serif text-[44px] text-gradient-gold leading-[1.1] mb-5 fade-up">Every reading is<br/>deterministic cash flow.</h2>
       <p class="text-sm text-amber-100/80 mb-6 leading-relaxed">300 inference turns cost <span class="hl">USD 6 (≈ ¥42)</span>, i.e. <span class="hl">¥0.14 / reading</span> at current bulk LLM rates. Against a ¥3.5 price the per-reading economics decompose as:</p>
       <table class="cmp mb-5">
         <thead><tr><th>Item</th><th>Amount</th><th>Share</th></tr></thead>
@@ -910,20 +1116,20 @@
       <p class="src text-center mt-2">Cost basis: USD 6 / 300 inference turns @ DeepSeek-V3 bulk rate, Q1 2026 actual.</p>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XIV · Unit Economics</span><span>2026.04 · 17 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XV · Unit Economics</span><span>2026.04 · 18 / 30</span></div>
 </section>
 
 <!-- ========== 18 Price Power ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XV · Price Power</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XVI · Price Power</span></div>
     <div class="chip">Page 18</div>
   </div>
 
   <div class="flex-1 grid grid-cols-5 gap-8 items-center">
     <div class="col-span-2">
       <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">PRICE · BENCHMARK</div>
-      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-6">Lower price → deeper reach.<br/>An inverted blue ocean.</h2>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-6 fade-up">Lower price → deeper reach.<br/>An inverted blue ocean.</h2>
       <div class="space-y-3">
         <div class="card flex justify-between items-center"><span class="serif">Offline temple / consultancy</span><span class="hl text-lg">¥200–2,000+</span></div>
         <div class="card flex justify-between items-center"><span class="serif">Douyin live mystics</span><span class="hl text-lg">¥50–500</span></div>
@@ -935,13 +1141,13 @@
     </div>
     <div class="col-span-3 chart-box h-[500px]"><canvas id="priceChart"></canvas></div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XV · Price Power</span><span>2026.04 · 18 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XVI · Price Power</span><span>2026.04 · 19 / 30</span></div>
 </section>
 
 <!-- ========== 19 Revenue Forecast ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XVI · 12-Month Revenue Forecast</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XVII · 12-Month Revenue Forecast</span></div>
     <div class="chip">Page 19</div>
   </div>
 
@@ -952,7 +1158,7 @@
     </div>
     <div class="col-span-2 space-y-4">
       <div class="section-eyebrow mb-2">Three scenarios</div>
-      <h2 class="serif text-[34px] text-gradient-gold leading-tight mb-1">12-month cumulative revenue</h2>
+      <h2 class="serif text-[34px] text-gradient-gold leading-tight mb-1 fade-up">12-month cumulative revenue</h2>
       <p class="text-xs text-amber-200/55 mb-3">All figures forward-looking. Detailed assumptions on next slide.</p>
       <table class="cmp">
         <thead><tr><th>Scenario</th><th>M12 MAU</th><th>Pay</th><th>ARPPU</th><th>12-mo Revenue</th></tr></thead>
@@ -973,19 +1179,19 @@
       <p class="src leading-relaxed">Excludes B2B SaaS, membership upgrades, and Spring-Festival annual-fortune lump sums — together a further +30–50% upside.</p>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XVI · Forecast</span><span>2026.04 · 19 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XVII · Forecast</span><span>2026.04 · 20 / 30</span></div>
 </section>
 
 <!-- ========== 20 Monetization ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XVII · Six Revenue Streams</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XVIII · Six Revenue Streams</span></div>
     <div class="chip">Page 20</div>
   </div>
 
   <div class="flex-1 flex flex-col justify-center">
     <div class="text-center mb-8">
-      <h2 class="serif text-4xl text-gradient-gold mb-2">Six Streams of Revenue</h2>
+      <h2 class="serif text-4xl text-gradient-gold mb-2 fade-up">Six Streams of Revenue</h2>
       <p class="text-sm text-amber-200/65 tracking-widest">SIX · REVENUE · STREAMS</p>
     </div>
 
@@ -1032,19 +1238,19 @@
       <div class="text-sm text-amber-100/85">All six streams together unlock a 12-month revenue ceiling of <span class="serif text-3xl text-gradient-gold mx-2">¥250M+</span> · No single stream &gt; 45% — structurally resilient.</div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XVII · Monetization</span><span>2026.04 · 20 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XVIII · Monetization</span><span>2026.04 · 21 / 30</span></div>
 </section>
 
 <!-- ========== 21 Key Assumptions ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XVIII · Key Assumptions &amp; Sensitivity</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XIX · Key Assumptions &amp; Sensitivity</span></div>
     <div class="chip">Page 21 · ★ Underwriting</div>
   </div>
 
   <div class="flex-1 flex flex-col justify-center max-w-[1320px] mx-auto w-full">
     <div class="section-eyebrow mb-3">What has to be true</div>
-    <h2 class="serif text-[42px] text-gradient-gold leading-tight mb-7">If two of these break, the<br/>plan still works. If five do, it doesn't.</h2>
+    <h2 class="serif text-[42px] text-gradient-gold leading-tight mb-7 fade-up">If two of these break, the<br/>plan still works. If five do, it doesn't.</h2>
 
     <div class="grid grid-cols-2 gap-8">
       <div>
@@ -1086,19 +1292,19 @@
     </div>
     <p class="src text-center mt-6">All figures forward-looking projections from internal model. Sensitivity holds ARPPU &amp; retention at base levels. Real outcomes will vary.</p>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XVIII · Key Assumptions</span><span>2026.04 · 21 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XIX · Key Assumptions</span><span>2026.04 · 22 / 30</span></div>
 </section>
 
 <!-- ========== 22 GTM Channels ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XIX · Multi-Surface Rollout</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XX · Multi-Surface Rollout</span></div>
     <div class="chip">Page 22</div>
   </div>
 
   <div class="flex-1 grid grid-cols-2 gap-8">
     <div>
-      <h2 class="serif text-3xl text-gradient-gold mb-4">Multi-Surface Rollout · Priority</h2>
+      <h2 class="serif text-3xl text-gradient-gold mb-4 fade-up">Multi-Surface Rollout · Priority</h2>
       <div class="space-y-3">
         <div class="card flex items-center gap-4">
           <div class="serif text-3xl gold w-10">1</div>
@@ -1136,7 +1342,7 @@
     </div>
 
     <div>
-      <h2 class="serif text-3xl text-gradient-gold mb-4">Acquisition Channel Mix</h2>
+      <h2 class="serif text-3xl text-gradient-gold mb-4 fade-up">Acquisition Channel Mix</h2>
       <div class="chart-box h-[420px]"><canvas id="channelChart"></canvas></div>
       <div class="grid grid-cols-2 gap-3 mt-3">
         <div class="card text-xs"><span class="hl serif">📕 Content seeding</span><div class="text-amber-100/75 mt-1">Xiaohongshu / Douyin / Bilibili / Zhihu</div></div>
@@ -1146,20 +1352,20 @@
       </div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XIX · Multi-Surface Rollout</span><span>2026.04 · 22 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XX · Multi-Surface Rollout</span><span>2026.04 · 23 / 30</span></div>
 </section>
 
 <!-- ========== 23 Cold Start ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XX · Cold-Start Funnel</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXI · Cold-Start Funnel</span></div>
     <div class="chip">Page 23</div>
   </div>
 
   <div class="flex-1 grid grid-cols-2 gap-10 items-center">
     <div class="chart-box h-[480px]"><canvas id="funnelChart"></canvas></div>
     <div>
-      <h2 class="serif text-3xl text-gradient-gold mb-4">100 → 1,000 → 100K → break-out</h2>
+      <h2 class="serif text-3xl text-gradient-gold mb-4 fade-up">100 → 1,000 → 100K → break-out</h2>
       <div class="space-y-3">
         <div class="card"><span class="serif gold">Stage 0 · Closed beta</span><div class="text-xs text-amber-100/75 mt-1">100 seed users (product testers + mystic KOCs); collect NPS and hexagram-accuracy feedback.</div></div>
         <div class="card"><span class="serif gold">Stage 1 · Ignition</span><div class="text-xs text-amber-100/75 mt-1">1,000 KOC ambassadors get free credits in exchange for UGC notes — building 5,000+ social assets.</div></div>
@@ -1179,20 +1385,20 @@
       </div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XX · Cold-Start Funnel</span><span>2026.04 · 23 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXI · Cold-Start Funnel</span><span>2026.04 · 24 / 30</span></div>
 </section>
 
 <!-- ========== 24 Compliance ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXI · Compliance &amp; Risk</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXII · Compliance &amp; Risk</span></div>
     <div class="chip">Page 24 · ★ Critical</div>
   </div>
 
   <div class="flex-1 flex flex-col justify-center max-w-[1320px] mx-auto w-full">
     <div class="text-center mb-7">
       <div class="section-eyebrow mb-3 justify-center" style="display:inline-flex">Compliance is the lifeline</div>
-      <h2 class="serif text-[40px] text-gradient-gold leading-tight">Priority zero of any China business.</h2>
+      <h2 class="serif text-[40px] text-gradient-gold leading-tight fade-up">Priority zero of any China business.</h2>
     </div>
 
     <div class="grid grid-cols-4 gap-5">
@@ -1258,19 +1464,19 @@
     </div>
     <p class="src text-center mt-5">Filings track per CAC published guidance (last updated Aug 2024). Final approval timing is not guaranteed; see Risk Register, page 25.</p>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXI · Compliance ★</span><span>2026.04 · 24 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXII · Compliance ★</span><span>2026.04 · 25 / 30</span></div>
 </section>
 
 <!-- ========== 25 Risk Register ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXII · Risk Register</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXIII · Risk Register</span></div>
     <div class="chip">Page 25 · Risk Map</div>
   </div>
 
   <div class="flex-1 flex flex-col justify-center max-w-[1320px] mx-auto w-full">
     <div class="section-eyebrow mb-3">What we lose sleep over</div>
-    <h2 class="serif text-[40px] text-gradient-gold leading-tight mb-6">Top risks &amp; how we contain each.</h2>
+    <h2 class="serif text-[40px] text-gradient-gold leading-tight mb-6 fade-up">Top risks &amp; how we contain each.</h2>
 
     <table class="cmp">
       <thead>
@@ -1338,19 +1544,19 @@
 
     <p class="src text-center mt-5">Likelihood / Impact assessed on 12-month horizon. Risk register reviewed monthly by leadership; refreshed at every board meeting.</p>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXII · Risk Register</span><span>2026.04 · 25 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXIII · Risk Register</span><span>2026.04 · 26 / 30</span></div>
 </section>
 
 <!-- ========== 26 Moat ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXIII · Five-Layered Moat</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXIV · Five-Layered Moat</span></div>
     <div class="chip">Page 26</div>
   </div>
 
   <div class="flex-1 flex flex-col justify-center">
     <div class="text-center mb-8">
-      <h2 class="serif text-4xl text-gradient-gold">A Five-Layered Moat — Deepening with Every Day</h2>
+      <h2 class="serif text-4xl text-gradient-gold fade-up">A Five-Layered Moat — Deepening with Every Day</h2>
       <p class="text-sm text-amber-200/65 tracking-widest mt-2">FIVE · LAYERED · MOAT</p>
     </div>
     <div class="grid grid-cols-5 gap-5">
@@ -1383,19 +1589,19 @@
 
     <div class="mt-10 chart-box h-[200px]"><canvas id="moatChart"></canvas></div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXIII · Five-Layered Moat</span><span>2026.04 · 26 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXIV · Five-Layered Moat</span><span>2026.04 · 27 / 30</span></div>
 </section>
 
 <!-- ========== 27 Roadmap ========== -->
 <section class="slide">
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXIV · Roadmap</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXV · Roadmap</span></div>
     <div class="chip">Page 27</div>
   </div>
 
   <div class="flex-1 flex flex-col justify-center">
     <div class="text-center mb-8">
-      <h2 class="serif text-4xl text-gradient-gold">12 Months · A Four-Stage Rocket</h2>
+      <h2 class="serif text-4xl text-gradient-gold fade-up">12 Months · A Four-Stage Rocket</h2>
       <p class="text-sm text-amber-200/65 tracking-widest mt-2">FROM · 0 · TO · 2M · USERS</p>
     </div>
 
@@ -1447,7 +1653,7 @@
 
     <div class="chart-box h-[200px] mt-8"><canvas id="roadmapChart"></canvas></div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXIV · Roadmap</span><span>2026.04 · 27 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXV · Roadmap</span><span>2026.04 · 28 / 30</span></div>
 </section>
 
 <!-- ========== 28 Team + Ask ========== -->
@@ -1455,14 +1661,14 @@
   <div class="bagua-bg"></div>
   <div class="star-field"></div>
   <div class="header">
-    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXV · Team &amp; The Ask</span></div>
+    <div class="flex items-center gap-3"><span class="serif gold tracking-[0.4em] text-sm">LIUREN AI</span><span class="text-amber-200/30">|</span><span class="text-xs text-amber-100/65 uppercase tracking-widest">Chapter XXVI · Team &amp; The Ask</span></div>
     <div class="chip">Page 28</div>
   </div>
 
   <div class="flex-1 grid grid-cols-2 gap-12 items-center max-w-[1320px] mx-auto w-full">
     <div>
       <div class="section-eyebrow mb-3">The team</div>
-      <h2 class="serif text-[40px] text-gradient-gold leading-[1.1] mb-7">Heritage scholars who ship AI.<br/>Engineers who studied the I-Ching.</h2>
+      <h2 class="serif text-[40px] text-gradient-gold leading-[1.1] mb-7 fade-up">Heritage scholars who ship AI.<br/>Engineers who studied the I-Ching.</h2>
       <div class="space-y-3">
         <div class="card card-corner flex items-center gap-4">
           <div class="w-14 h-14 rounded-full bg-gradient-to-br from-amber-300/40 to-purple-700/40 border border-amber-300/50 flex items-center justify-center serif text-base text-amber-100">CEO</div>
@@ -1523,7 +1729,7 @@
       </div>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXV · Team &amp; The Ask</span><span>2026.04 · 28 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>Chapter XXVI · Team &amp; The Ask</span><span>2026.04 · 29 / 30</span></div>
 </section>
 
 <!-- ========== 29 Thank You ========== -->
@@ -1558,7 +1764,7 @@
       <span>2026.04 · CHINA · LAUNCH</span>
     </div>
   </div>
-  <div class="footer"><span>LIUREN AI · Confidential</span><span>End · Thank You</span><span>2026.04 · 29 / 29</span></div>
+  <div class="footer"><span>LIUREN AI · Confidential</span><span>End · Thank You</span><span>2026.04 · 30 / 30</span></div>
 </section>
 </div>
 
@@ -1632,6 +1838,7 @@
 
   function buildAllCharts() {
     chartDefaults();
+    Chart.defaults.animation = { duration: 900, easing: 'easeOutQuart' };
 
     // 4 - radar value
     new Chart(document.getElementById('radarValue'), {
