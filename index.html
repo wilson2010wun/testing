@@ -1,0 +1,1467 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>全球首款专业级小六壬 AI 占卜产品 · 中国大陆市场上线战略汇报</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0f0a1f;
+    --deep: #1a1033;
+    --plum: #2a1a4a;
+    --gold: #d4af37;
+    --gold-soft: #e8c970;
+    --jade: #6ee7b7;
+  }
+  html, body { height: 100%; margin: 0; padding: 0; background: var(--ink); color: #f4ecd8; font-family: 'Noto Sans SC', system-ui, sans-serif; overflow: hidden; }
+  .serif { font-family: 'Noto Serif SC', serif; }
+  .gold { color: var(--gold); }
+  .gold-bg { background: var(--gold); }
+  .text-gradient-gold { background: linear-gradient(135deg, #f3d56a 0%, #d4af37 50%, #b8860b 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .text-gradient-mystic { background: linear-gradient(135deg, #c4b5fd 0%, #d4af37 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .deck { position: relative; width: 100vw; height: 100vh; overflow: hidden; }
+  .slide {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    padding: 56px 72px 72px 72px;
+    box-sizing: border-box;
+    background: radial-gradient(ellipse at top, #2a1a4a 0%, #1a1033 45%, #0f0a1f 100%);
+    opacity: 0; transform: translateX(40px); pointer-events: none;
+    transition: opacity .6s ease, transform .6s ease;
+    display: flex; flex-direction: column;
+  }
+  .slide.active { opacity: 1; transform: translateX(0); pointer-events: auto; z-index: 2; }
+  .slide.prev { transform: translateX(-40px); }
+  .header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(212,175,55,.25); padding-bottom: 14px; }
+  .footer { position: absolute; left: 72px; right: 72px; bottom: 24px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(244,236,216,.55); letter-spacing: .12em; }
+  .logo-mark { width: 36px; height: 36px; }
+  .pageno { position: fixed; right: 28px; bottom: 22px; z-index: 50; font-family: 'Noto Serif SC', serif; color: var(--gold-soft); font-size: 14px; letter-spacing: .2em; background: rgba(15,10,31,.7); border: 1px solid rgba(212,175,55,.35); padding: 6px 14px; border-radius: 999px; backdrop-filter: blur(6px); }
+  .nav-hint { position: fixed; left: 28px; bottom: 22px; z-index: 50; font-size: 11px; color: rgba(244,236,216,.5); letter-spacing: .12em; }
+  .card { background: linear-gradient(160deg, rgba(212,175,55,.08), rgba(42,26,74,.4)); border: 1px solid rgba(212,175,55,.22); border-radius: 14px; padding: 22px; backdrop-filter: blur(4px); }
+  .card-strong { background: linear-gradient(160deg, rgba(212,175,55,.18), rgba(42,26,74,.55)); border: 1px solid rgba(212,175,55,.5); }
+  .chip { display: inline-block; padding: 4px 12px; border-radius: 999px; border: 1px solid rgba(212,175,55,.45); font-size: 12px; letter-spacing: .1em; color: var(--gold-soft); background: rgba(212,175,55,.08); }
+  .stat { font-family: 'Noto Serif SC', serif; font-weight: 900; line-height: 1; }
+  .glow { text-shadow: 0 0 24px rgba(212,175,55,.45); }
+  table.cmp { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.cmp th, table.cmp td { padding: 10px 12px; border-bottom: 1px solid rgba(212,175,55,.15); text-align: left; }
+  table.cmp th { color: var(--gold); font-weight: 600; letter-spacing: .08em; background: rgba(212,175,55,.06); }
+  table.cmp tr:hover td { background: rgba(212,175,55,.04); }
+  .hl { color: var(--gold); font-weight: 600; }
+  .ok { color: #6ee7b7; }
+  .no { color: #fb7185; }
+  .bullet::before { content: "◆"; color: var(--gold); margin-right: 8px; font-size: .85em; }
+  .qline { width: 60px; height: 3px; background: linear-gradient(90deg, var(--gold), transparent); border-radius: 2px; }
+  .bagua-bg { position: absolute; inset: 0; pointer-events: none; opacity: .07; background-image: radial-gradient(circle at 20% 20%, #d4af37 0, transparent 35%), radial-gradient(circle at 80% 80%, #8b5cf6 0, transparent 40%); }
+  .star-field { position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,.6), transparent), radial-gradient(1px 1px at 38% 62%, rgba(255,255,255,.5), transparent), radial-gradient(1px 1px at 64% 28%, rgba(255,255,255,.7), transparent), radial-gradient(1px 1px at 82% 74%, rgba(255,255,255,.5), transparent), radial-gradient(1px 1px at 22% 84%, rgba(255,255,255,.4), transparent), radial-gradient(1px 1px at 92% 12%, rgba(255,255,255,.6), transparent); opacity: .7; }
+  .countdown { font-family: 'Noto Serif SC', serif; font-size: 84px; font-weight: 900; line-height: 1; }
+  .ring { width: 220px; height: 220px; border: 1px dashed rgba(212,175,55,.35); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+  .ring-inner { width: 170px; height: 170px; border-radius: 50%; border: 1px solid rgba(212,175,55,.55); display: flex; flex-direction: column; align-items: center; justify-content: center; background: radial-gradient(circle, rgba(212,175,55,.12), transparent 70%); }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .slow-spin { animation: spin 80s linear infinite; }
+  .chart-box { position: relative; width: 100%; height: 100%; }
+  .key-stat-block { display: flex; flex-direction: column; gap: 4px; }
+  .vline { width: 1px; background: linear-gradient(180deg, transparent, rgba(212,175,55,.4), transparent); }
+  .scroll-indicator { position: fixed; right: 14px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 6px; z-index: 50; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(212,175,55,.25); transition: all .3s; }
+  .dot.on { background: var(--gold); transform: scale(1.6); box-shadow: 0 0 8px var(--gold); }
+  .print-tip { position: fixed; left: 50%; transform: translateX(-50%); top: 14px; z-index: 60; font-size: 11px; color: rgba(244,236,216,.55); background: rgba(15,10,31,.7); border: 1px solid rgba(212,175,55,.3); padding: 5px 14px; border-radius: 999px; letter-spacing: .12em; }
+  @media print {
+    html, body { overflow: visible; height: auto; background: #fff; }
+    .deck { height: auto; }
+    .slide { position: relative; opacity: 1 !important; transform: none !important; page-break-after: always; height: 100vh; min-height: 100vh; }
+    .pageno, .nav-hint, .scroll-indicator, .print-tip { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-tip">Chrome 打印 → 横向 A4 → 保存为 PDF</div>
+<div class="pageno"><span id="cur">1</span> / <span id="total">20</span></div>
+<div class="nav-hint">← → 翻页 · 滚轮浏览</div>
+<div class="scroll-indicator" id="dots"></div>
+
+<div class="deck" id="deck">
+<!-- ========== 1 封面 ========== -->
+<section class="slide active">
+  <div class="bagua-bg"></div>
+  <div class="star-field"></div>
+  <div class="header">
+    <div class="flex items-center gap-3">
+      <svg class="logo-mark" viewBox="0 0 64 64" fill="none">
+        <circle cx="32" cy="32" r="30" stroke="#d4af37" stroke-width="1.2"/>
+        <path d="M32 2 a30 30 0 0 1 0 60 a15 15 0 0 1 0-30 a15 15 0 0 0 0-30 z" fill="#d4af37"/>
+        <circle cx="32" cy="17" r="3" fill="#0f0a1f"/>
+        <circle cx="32" cy="47" r="3" fill="#d4af37"/>
+      </svg>
+      <span class="serif text-lg gold tracking-widest">六壬 · LIUREN AI</span>
+    </div>
+    <div class="text-xs tracking-widest text-amber-200/60">机密 · 内部战略汇报</div>
+  </div>
+
+  <div class="flex-1 flex items-center justify-between gap-12 mt-4">
+    <div class="flex-1">
+      <div class="chip mb-6">CHINA MAINLAND LAUNCH · 2026</div>
+      <h1 class="serif text-6xl leading-tight font-black text-gradient-gold glow mb-4">全球首款专业级<br/>小六壬 AI 占卜产品</h1>
+      <h2 class="serif text-3xl text-amber-100/90 font-medium mb-6">中国大陆市场上线战略汇报</h2>
+      <div class="qline mb-6"></div>
+      <p class="serif text-2xl text-amber-200/80">「 让千年智慧 &nbsp;触手可及 」</p>
+      <p class="text-base text-amber-100/60 mt-3 tracking-wider">东方智慧 · AI 重塑 · 心灵陪伴</p>
+      <div class="mt-10 flex items-center gap-8">
+        <div>
+          <div class="text-xs text-amber-200/50 tracking-widest mb-1">汇报对象</div>
+          <div class="serif text-base text-amber-100/85">董事会 / 战略投资人</div>
+        </div>
+        <div class="w-px h-10 bg-amber-200/20"></div>
+        <div>
+          <div class="text-xs text-amber-200/50 tracking-widest mb-1">汇报日期</div>
+          <div class="serif text-base text-amber-100/85">2026 年 4 月</div>
+        </div>
+        <div class="w-px h-10 bg-amber-200/20"></div>
+        <div>
+          <div class="text-xs text-amber-200/50 tracking-widest mb-1">版本</div>
+          <div class="serif text-base text-amber-100/85">V1.0 · CN</div>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col items-center">
+      <div class="ring slow-spin">
+        <div class="ring-inner" style="animation: none;">
+          <div class="text-xs text-amber-200/60 tracking-widest mb-2">DAYS TO LAUNCH</div>
+          <div class="countdown text-gradient-gold">30</div>
+          <div class="text-xs text-amber-200/60 tracking-widest mt-2">距大陆首发</div>
+        </div>
+      </div>
+      <div class="mt-6 text-center">
+        <svg viewBox="0 0 200 30" class="w-48 h-6 opacity-70">
+          <text x="100" y="20" text-anchor="middle" fill="#d4af37" font-family="Noto Serif SC" font-size="14" letter-spacing="6">天 · 地 · 人 · 和</text>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>LIUREN AI · CONFIDENTIAL</span>
+    <span>东方智慧 AI 重塑 · 中国大陆首发</span>
+    <span>2026.04 · 01</span>
+  </div>
+</section>
+
+<!-- ========== 2 愿景 ========== -->
+<section class="slide">
+  <div class="bagua-bg"></div>
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">愿景 · Vision</span></div>
+    <div class="chip">Chapter 01</div>
+  </div>
+  <div class="flex-1 flex items-center justify-center text-center">
+    <div class="max-w-4xl">
+      <div class="serif text-amber-200/60 text-lg tracking-[0.4em] mb-8">OUR · VISION</div>
+      <h2 class="serif text-5xl leading-snug text-gradient-gold glow mb-10">成为中国年轻人<br/>触手可及的 AI 心灵树洞</h2>
+      <p class="text-xl leading-relaxed text-amber-100/85 serif">
+        以小六壬千年智慧为根，<span class="hl">AI 大模型</span>为翼，<br/>
+        让每一次心动、每一次困惑，<br/>
+        都能在<span class="hl">三秒之内</span>得到一份温柔而专业的回响。
+      </p>
+      <div class="qline mx-auto my-10"></div>
+      <div class="grid grid-cols-3 gap-8 mt-6">
+        <div><div class="serif text-3xl text-gradient-gold">文化</div><div class="text-xs text-amber-200/60 mt-1 tracking-widest">CULTURE</div><p class="text-sm text-amber-100/70 mt-2">传统国学 · 当代表达</p></div>
+        <div><div class="serif text-3xl text-gradient-gold">情绪</div><div class="text-xs text-amber-200/60 mt-1 tracking-widest">EMOTION</div><p class="text-sm text-amber-100/70 mt-2">AI 陪伴 · 心理疗愈</p></div>
+        <div><div class="serif text-3xl text-gradient-gold">娱乐</div><div class="text-xs text-amber-200/60 mt-1 tracking-widest">FUN</div><p class="text-sm text-amber-100/70 mt-2">轻量解压 · 国潮社交</p></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>愿景 / Vision</span><span>2026.04 · 02</span></div>
+</section>
+<!-- ========== 3 产品定位 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">产品定位 · Positioning</span></div>
+    <div class="chip">Chapter 02 · 01/03</div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="text-center mb-10">
+      <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">ONE-LINE PITCH</div>
+      <h2 class="serif text-5xl text-gradient-gold glow leading-tight">你的 AI 国学心灵树洞</h2>
+      <div class="qline mx-auto mt-6"></div>
+    </div>
+
+    <div class="grid grid-cols-3 gap-6">
+      <div class="card">
+        <div class="text-3xl serif gold mb-2">壹</div>
+        <div class="serif text-xl text-amber-100 mb-1">合规对外话术</div>
+        <div class="text-xs text-amber-200/60 tracking-widest mb-4">PUBLIC NARRATIVE</div>
+        <p class="text-sm leading-relaxed text-amber-100/80">「<span class="hl">AI 国学文化体验</span> + <span class="hl">情绪疗愈陪伴</span>」<br/><br/>定位为"传统文化娱乐 + 心理减压"工具，全程标注「仅供娱乐参考」，规避「算命/迷信」敏感词。</p>
+      </div>
+      <div class="card card-strong">
+        <div class="text-3xl serif gold mb-2">贰</div>
+        <div class="serif text-xl text-amber-100 mb-1">产品本质</div>
+        <div class="text-xs text-amber-200/60 tracking-widest mb-4">PRODUCT ESSENCE</div>
+        <p class="text-sm leading-relaxed text-amber-100/85">基于<span class="hl">小六壬卦象引擎</span>的垂直 AI Agent：<br/>· 精准卦象解读<br/>· 多轮追问对话<br/>· 情绪识别与疗愈<br/>· 全场景文化陪伴</p>
+      </div>
+      <div class="card">
+        <div class="text-3xl serif gold mb-2">叁</div>
+        <div class="serif text-xl text-amber-100 mb-1">差异化锚点</div>
+        <div class="text-xs text-amber-200/60 tracking-widest mb-4">DIFFERENTIATION</div>
+        <p class="text-sm leading-relaxed text-amber-100/80"><span class="hl">全球唯一</span>专业级小六壬 AI，<br/>专业度<span class="hl">碾压通用大模型</span>（豆包/文心/通义/Kimi/DeepSeek），价格仅为人工玄学服务的 <span class="hl">1/4 ~ 1/100</span>。</p>
+      </div>
+    </div>
+
+    <div class="mt-10 flex items-center justify-around text-center">
+      <div><div class="serif stat text-4xl text-gradient-gold">96%</div><div class="text-xs text-amber-200/60 mt-2 tracking-widest">毛利率</div></div>
+      <div class="vline h-12"></div>
+      <div><div class="serif stat text-4xl text-gradient-gold">3.5 元</div><div class="text-xs text-amber-200/60 mt-2 tracking-widest">单次定价</div></div>
+      <div class="vline h-12"></div>
+      <div><div class="serif stat text-4xl text-gradient-gold">4 端</div><div class="text-xs text-amber-200/60 mt-2 tracking-widest">小程序+H5+iOS+安卓</div></div>
+      <div class="vline h-12"></div>
+      <div><div class="serif stat text-4xl text-gradient-gold">3 秒</div><div class="text-xs text-amber-200/60 mt-2 tracking-widest">极速出卦</div></div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>产品定位 / Positioning</span><span>2026.04 · 03</span></div>
+</section>
+
+<!-- ========== 4 核心价值三圈 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">三大核心价值 · Core Value</span></div>
+    <div class="chip">Chapter 02 · 02/03</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-2 gap-10 items-center">
+    <div class="relative h-[460px]">
+      <div class="chart-box"><canvas id="radarValue"></canvas></div>
+    </div>
+    <div class="space-y-5">
+      <div class="card">
+        <div class="flex items-center gap-3 mb-2"><span class="serif text-2xl gold">文化性</span><span class="chip">Culture</span></div>
+        <p class="text-sm text-amber-100/80 leading-relaxed">传承小六壬"大安/留连/速喜/赤口/小吉/空亡"六神体系，结合《周易》《麻衣神相》知识图谱，让<span class="hl">国学不再老气</span>。</p>
+      </div>
+      <div class="card card-strong">
+        <div class="flex items-center gap-3 mb-2"><span class="serif text-2xl gold">情绪价值</span><span class="chip">Emotion</span></div>
+        <p class="text-sm text-amber-100/85 leading-relaxed">AI 全程<span class="hl">共情 + 倾听 + 鼓励</span>，多轮追问中识别用户情绪，是当代年轻人的「电子木鱼 + AI 心理咨询师」。</p>
+      </div>
+      <div class="card">
+        <div class="flex items-center gap-3 mb-2"><span class="serif text-2xl gold">娱乐性</span><span class="chip">Fun</span></div>
+        <p class="text-sm text-amber-100/80 leading-relaxed">轻量、好玩、可分享，<span class="hl">3 秒一卦</span>，带社交裂变属性，符合 Z 世代"玄学搭子"消费习惯。</p>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>核心价值 / Core Value</span><span>2026.04 · 04</span></div>
+</section>
+
+<!-- ========== 5 用户画像 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">用户画像 · Personas</span></div>
+    <div class="chip">Chapter 02 · 03/03</div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="text-center mb-8">
+      <h2 class="serif text-3xl text-gradient-gold">谁会为「东方智慧 + AI 陪伴」买单？</h2>
+      <p class="text-sm text-amber-200/60 mt-2 tracking-widest">FOUR · CORE · SEGMENTS · IN · CHINA</p>
+    </div>
+
+    <div class="grid grid-cols-4 gap-5">
+      <div class="card">
+        <div class="text-4xl mb-3">🎓</div>
+        <div class="serif text-xl text-amber-100 mb-1">Z 世代焦虑族</div>
+        <div class="text-xs text-amber-200/60 mb-3">18-26 岁 · 大学生/初入职场</div>
+        <ul class="text-xs space-y-1 text-amber-100/75">
+          <li class="bullet">学业/求职/恋爱不确定性</li>
+          <li class="bullet">爱玩 MBTI、塔罗、电子木鱼</li>
+          <li class="bullet">月可支配 1.5-3K，单次 ¥3.5 无压力</li>
+        </ul>
+        <div class="mt-3 text-xs gold">规模：≈ 2.6 亿</div>
+      </div>
+      <div class="card card-strong">
+        <div class="text-4xl mb-3">💼</div>
+        <div class="serif text-xl text-amber-100 mb-1">都市职场白领</div>
+        <div class="text-xs text-amber-200/60 mb-3">25-40 岁 · 一线/新一线</div>
+        <ul class="text-xs space-y-1 text-amber-100/80">
+          <li class="bullet">职场内卷、跳槽、副业焦虑</li>
+          <li class="bullet">付费意愿与频次最高（核心金主）</li>
+          <li class="bullet">看重隐私 · 偏好 App / 小程序匿名</li>
+        </ul>
+        <div class="mt-3 text-xs gold">规模：≈ 1.4 亿 · ARPPU 最高</div>
+      </div>
+      <div class="card">
+        <div class="text-4xl mb-3">🍼</div>
+        <div class="serif text-xl text-amber-100 mb-1">都市宝妈</div>
+        <div class="text-xs text-amber-200/60 mb-3">28-42 岁 · 育儿压力</div>
+        <ul class="text-xs space-y-1 text-amber-100/75">
+          <li class="bullet">育儿、夫妻、婆媳、副业焦虑</li>
+          <li class="bullet">小红书重度活跃，社群裂变率高</li>
+          <li class="bullet">情绪疗愈刚需，复购率领先</li>
+        </ul>
+        <div class="mt-3 text-xs gold">规模：≈ 7000 万</div>
+      </div>
+      <div class="card">
+        <div class="text-4xl mb-3">🌾</div>
+        <div class="serif text-xl text-amber-100 mb-1">下沉市场银发</div>
+        <div class="text-xs text-amber-200/60 mb-3">45-65 岁 · 三四线及县域</div>
+        <ul class="text-xs space-y-1 text-amber-100/75">
+          <li class="bullet">对传统国学天然信任</li>
+          <li class="bullet">微信生态最重度（视频号 + 小程序）</li>
+          <li class="bullet">通过子女/熟人裂变进入</li>
+        </ul>
+        <div class="mt-3 text-xs gold">规模：≈ 3 亿（潜力市场）</div>
+      </div>
+    </div>
+
+    <div class="mt-8 card">
+      <div class="text-center text-amber-100/85">综合可触达 TAM ≈ <span class="serif text-3xl text-gradient-gold mx-2">7.7 亿</span> 中文互联网用户 · 付费转化潜力人群 ≈ <span class="serif text-3xl text-gradient-gold mx-2">1.2 亿</span></div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>用户画像 / Personas</span><span>2026.04 · 05</span></div>
+</section>
+<!-- ========== 6 中国市场机会 - 心理健康 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">国内心理健康市场 · Mental Health</span></div>
+    <div class="chip">Chapter 03 · 01/04</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-2 gap-10 items-center">
+    <div>
+      <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">THE · SILENT · EPIDEMIC</div>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-6">9500 万人在等一个<br/>无评判的"听众"</h2>
+      <div class="space-y-4">
+        <div class="card flex items-center gap-5">
+          <div class="serif stat text-5xl text-gradient-gold w-32">9500<span class="text-2xl">万</span></div>
+          <div><div class="serif text-base text-amber-100">中国抑郁症患者</div><div class="text-xs text-amber-200/60 mt-1">数据来源：北大六院 / 国家卫健委</div></div>
+        </div>
+        <div class="card flex items-center gap-5">
+          <div class="serif stat text-5xl text-gradient-gold w-32">7.6<span class="text-2xl">%</span></div>
+          <div><div class="serif text-base text-amber-100">焦虑障碍终身患病率</div><div class="text-xs text-amber-200/60 mt-1">≈ 1 亿人 · 中国精神卫生调查</div></div>
+        </div>
+        <div class="card card-strong flex items-center gap-5">
+          <div class="serif stat text-5xl text-gradient-gold w-32">&lt; 1<span class="text-2xl">%</span></div>
+          <div><div class="serif text-base text-amber-100">心理咨询渗透率</div><div class="text-xs text-amber-200/60 mt-1">人均咨询费 400-1500 元/小时 · 严重供不应求</div></div>
+        </div>
+      </div>
+      <p class="text-sm text-amber-100/75 mt-6 leading-relaxed">AI + 国学的<span class="hl">"非诊断式陪伴"</span>形态，恰好填补"心理咨询太贵 / 看心理科被污名化"之间的<span class="hl">巨大空白</span>。</p>
+    </div>
+    <div class="h-[480px] chart-box"><canvas id="mentalChart"></canvas></div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>心理健康市场 / Mental Health</span><span>2026.04 · 06</span></div>
+</section>
+
+<!-- ========== 7 玄学经济规模 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">国内泛玄学经济 · Mystic Economy</span></div>
+    <div class="chip">Chapter 03 · 02/04</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-5 gap-8 items-stretch">
+    <div class="col-span-2 flex flex-col justify-center">
+      <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">A · ¥100B · INDUSTRY</div>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-6">被低估的<br/><span class="text-amber-100">千亿级</span>玄学消费</h2>
+      <div class="card mb-4">
+        <div class="text-xs gold tracking-widest mb-1">PAN-MYSTIC MARKET</div>
+        <div class="serif stat text-5xl text-gradient-gold">¥1200<span class="text-2xl"> 亿</span></div>
+        <div class="text-xs text-amber-200/60 mt-2">2025 年中国泛玄学（占卜+开运+周边）市场规模 · iResearch / 36Kr 估算</div>
+      </div>
+      <div class="card card-strong">
+        <div class="text-xs gold tracking-widest mb-1">GEN-Z YEARLY SPEND</div>
+        <div class="serif stat text-5xl text-gradient-gold">¥4127</div>
+        <div class="text-xs text-amber-200/60 mt-2">Z 世代人均"玄学消费"年支出 · 后浪研究所 2024</div>
+      </div>
+    </div>
+    <div class="col-span-3 chart-box h-[480px]"><canvas id="mysticChart"></canvas></div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>玄学经济规模 / Mystic Economy</span><span>2026.04 · 07</span></div>
+</section>
+
+<!-- ========== 8 文化复兴红利 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">国潮文化红利 · Cultural Revival</span></div>
+    <div class="chip">Chapter 03 · 03/04</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-2 gap-8">
+    <div class="flex flex-col justify-center">
+      <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">GUOCHAO · WAVE</div>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-6">国潮 + 易经 = 年轻人的"新精神消费"</h2>
+      <div class="space-y-3">
+        <div class="card"><span class="serif gold">📚 知乎</span> · 「易经」话题关注 <span class="hl">280 万</span> · 月均阅读 <span class="hl">9000 万+</span></div>
+        <div class="card"><span class="serif gold">📺 B 站</span> · 「易经/小六壬」单条爆款最高 <span class="hl">810 万</span>播放</div>
+        <div class="card"><span class="serif gold">📱 抖音</span> · #小六壬 话题播放量 <span class="hl">38 亿</span> · 直播打赏年规模 <span class="hl">≈ 60 亿</span></div>
+        <div class="card"><span class="serif gold">📕 小红书</span> · 「玄学」笔记 <span class="hl">1200 万+</span> · 同比增长 <span class="hl">216%</span></div>
+        <div class="card card-strong"><span class="serif gold">🛒 淘宝</span> · 开运手串/朱砂/水晶 24 年 GMV <span class="hl">破 200 亿</span></div>
+      </div>
+    </div>
+    <div class="chart-box h-[500px]"><canvas id="trendChart"></canvas></div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>文化复兴红利 / Guochao</span><span>2026.04 · 08</span></div>
+</section>
+
+<!-- ========== 9 竞争格局 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">国内竞争格局 · Competitive Landscape</span></div>
+    <div class="chip">Chapter 03 · 04/04</div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="grid grid-cols-2 gap-8">
+      <div>
+        <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">FOUR · QUADRANT · POSITIONING</div>
+        <h2 class="serif text-3xl text-gradient-gold mb-6">在「专业度 × 智能化」两轴上<br/>我们处于无人区</h2>
+        <table class="cmp">
+          <thead>
+            <tr><th>玩家</th><th>定位</th><th>价格</th><th>痛点</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>问问 App</td><td>真人塔罗师</td><td class="hl">¥15/分钟</td><td class="no">慢、贵、隐私顾虑</td></tr>
+            <tr><td>测测</td><td>星盘塔罗工具</td><td>¥9-39/次</td><td class="no">非小六壬，AI 弱</td></tr>
+            <tr><td>随身易经</td><td>易经查询工具</td><td>免费 + 内购</td><td class="no">无 AI · 无情绪陪伴</td></tr>
+            <tr><td>Soul 玄学板块</td><td>社交+占卜</td><td>会员制</td><td class="no">娱乐为主，专业度低</td></tr>
+            <tr><td>抖音玄学直播</td><td>大师真人解卦</td><td class="hl">¥50-500/次</td><td class="no">合规风险高</td></tr>
+            <tr><td>豆包/文心/Kimi</td><td>通用大模型</td><td>免费</td><td class="no">不专业、回答模糊</td></tr>
+            <tr style="background: rgba(212,175,55,.12);"><td class="hl">六壬 AI（我们）</td><td class="hl">垂直 AI 占卜</td><td class="hl">¥3.5/次</td><td class="ok">专业 · 即时 · 匿名</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="chart-box h-[500px]"><canvas id="quadrantChart"></canvas></div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>竞争格局 / Competition</span><span>2026.04 · 09</span></div>
+</section>
+<!-- ========== 10 小六壬科普 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">小六壬 · 千年智慧</span></div>
+    <div class="chip">Chapter 04 · 01/04</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-5 gap-8 items-center">
+    <div class="col-span-2">
+      <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">XIAO · LIUREN · 101</div>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-4">三秒一卦<br/>掌中乾坤</h2>
+      <p class="text-sm text-amber-100/85 leading-relaxed">小六壬，又称<span class="hl">"诸葛马前课"</span>，相传源于诸葛亮，盛于唐宋，距今 <span class="hl">1800+ 年</span>。仅需<span class="hl">月、日、时</span>三数掐指即得，是民间最易学、最普及的占卜法门。</p>
+      <div class="qline my-5"></div>
+      <div class="grid grid-cols-2 gap-3">
+        <div class="card text-center"><div class="serif text-2xl gold">大安</div><div class="text-xs text-amber-200/65 mt-1">身在静中</div></div>
+        <div class="card text-center"><div class="serif text-2xl gold">留连</div><div class="text-xs text-amber-200/65 mt-1">事将延误</div></div>
+        <div class="card text-center"><div class="serif text-2xl gold">速喜</div><div class="text-xs text-amber-200/65 mt-1">喜从天降</div></div>
+        <div class="card text-center"><div class="serif text-2xl gold">赤口</div><div class="text-xs text-amber-200/65 mt-1">口舌是非</div></div>
+        <div class="card text-center"><div class="serif text-2xl gold">小吉</div><div class="text-xs text-amber-200/65 mt-1">人合心同</div></div>
+        <div class="card text-center"><div class="serif text-2xl gold">空亡</div><div class="text-xs text-amber-200/65 mt-1">阴气不和</div></div>
+      </div>
+    </div>
+
+    <div class="col-span-3">
+      <table class="cmp">
+        <thead><tr><th>对比维度</th><th>小六壬</th><th>大六壬</th><th>六爻</th><th>塔罗</th></tr></thead>
+        <tbody>
+          <tr><td>学习门槛</td><td class="hl">极低 · 3 分钟</td><td class="no">极高 · 数年</td><td class="no">高 · 数月</td><td>中</td></tr>
+          <tr><td>所需信息</td><td class="hl">月日时</td><td>八字 + 日干</td><td>三铜钱六次</td><td>抽牌</td></tr>
+          <tr><td>解读速度</td><td class="hl">≤ 30 秒</td><td>≥ 30 分</td><td>≥ 15 分</td><td>≥ 10 分</td></tr>
+          <tr><td>大众认知度</td><td class="ok">高（短视频爆款）</td><td>低</td><td>中</td><td>高</td></tr>
+          <tr><td>AI 适配度</td><td class="ok">★★★★★</td><td>★★★</td><td>★★★</td><td>★★★★</td></tr>
+          <tr><td>合规友好度</td><td class="ok">国学文化</td><td>易混淆迷信</td><td>易混淆迷信</td><td>西方文化</td></tr>
+          <tr><td>商业化潜力</td><td class="hl ok">轻量高频</td><td>低频重决策</td><td>低频重决策</td><td>娱乐高频</td></tr>
+        </tbody>
+      </table>
+      <div class="card mt-5 card-strong">
+        <div class="text-sm text-amber-100/85 leading-relaxed">∴ 小六壬是<span class="hl">最适合 AI 化、移动化、年轻化</span>的中国本土占卜法门 —— 高频、轻量、合规友好、自带流量。</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>小六壬科普 / Origin</span><span>2026.04 · 10</span></div>
+</section>
+
+<!-- ========== 11 核心功能 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">核心功能 · Features</span></div>
+    <div class="chip">Chapter 04 · 02/04</div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="text-center mb-8">
+      <h2 class="serif text-4xl text-gradient-gold mb-2">四大核心功能矩阵</h2>
+      <p class="text-sm text-amber-200/65 tracking-widest">FROM · QUESTION · TO · HEALING</p>
+    </div>
+
+    <div class="grid grid-cols-4 gap-5">
+      <div class="card">
+        <div class="serif text-3xl gold mb-2">①</div>
+        <div class="serif text-lg text-amber-100 mb-2">占卜引擎</div>
+        <ul class="text-xs space-y-1.5 text-amber-100/80">
+          <li class="bullet">小六壬卦象自动起卦</li>
+          <li class="bullet">融合年月日时四柱</li>
+          <li class="bullet">12 时辰真太阳时校准</li>
+          <li class="bullet">3 秒内出卦象 + 六神</li>
+        </ul>
+      </div>
+      <div class="card card-strong">
+        <div class="serif text-3xl gold mb-2">②</div>
+        <div class="serif text-lg text-amber-100 mb-2">AI 多轮追问</div>
+        <ul class="text-xs space-y-1.5 text-amber-100/85">
+          <li class="bullet">基于卦象 + 用户上下文</li>
+          <li class="bullet">追问"具体什么时候/谁"</li>
+          <li class="bullet">支持工作/感情/健康/财运</li>
+          <li class="bullet">不答即止 · 不引导消费</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="serif text-3xl gold mb-2">③</div>
+        <div class="serif text-lg text-amber-100 mb-2">情绪陪伴</div>
+        <ul class="text-xs space-y-1.5 text-amber-100/80">
+          <li class="bullet">情绪状态识别（焦虑/低落）</li>
+          <li class="bullet">CBT 认知重构话术</li>
+          <li class="bullet">国学典故疗愈引用</li>
+          <li class="bullet">高危词自动触达 12320</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="serif text-3xl gold mb-2">④</div>
+        <div class="serif text-lg text-amber-100 mb-2">卦象可视化</div>
+        <ul class="text-xs space-y-1.5 text-amber-100/80">
+          <li class="bullet">动态卦象动画 + 音效</li>
+          <li class="bullet">朱砂书法风格生成图</li>
+          <li class="bullet">一键生成"今日运势"卡片</li>
+          <li class="bullet">小红书/朋友圈分享裂变</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-8 grid grid-cols-3 gap-5">
+      <div class="card text-center"><div class="serif text-3xl text-gradient-gold">3 秒</div><div class="text-xs text-amber-200/65 mt-1 tracking-widest">极速出卦</div></div>
+      <div class="card text-center"><div class="serif text-3xl text-gradient-gold">8 维度</div><div class="text-xs text-amber-200/65 mt-1 tracking-widest">事业/感情/健康/财运/学业/出行/官非/失物</div></div>
+      <div class="card text-center"><div class="serif text-3xl text-gradient-gold">∞ 轮</div><div class="text-xs text-amber-200/65 mt-1 tracking-widest">不限次追问</div></div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>核心功能 / Features</span><span>2026.04 · 11</span></div>
+</section>
+
+<!-- ========== 12 与通用大模型对比 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">VS 国产通用大模型 · LLM Benchmark</span></div>
+    <div class="chip">Chapter 04 · 03/04</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-2 gap-8 items-center">
+    <div>
+      <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">VERTICAL · BEATS · GENERAL</div>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-6">通用大模型答不了，<br/>我们答得专业。</h2>
+      <p class="text-sm text-amber-100/80 leading-relaxed mb-4">通用大模型基于通用语料预训练，对小六壬六神体系、起卦规则、生克关系<span class="hl">几乎一无所知</span>，且因"避免迷信"训练目标，会<span class="hl">直接拒答或泛化输出</span>。</p>
+      <p class="text-sm text-amber-100/80 leading-relaxed mb-6">我们使用<span class="hl">15 万条小六壬古籍语料 + 8 万条专业师傅解卦案例 + RLHF 情绪对齐</span>，垂直精调 7B/13B 模型。</p>
+      <table class="cmp">
+        <thead><tr><th>评测维度（5 分制）</th><th>通用模型平均</th><th>六壬 AI</th></tr></thead>
+        <tbody>
+          <tr><td>卦象识别准确度</td><td class="no">1.4</td><td class="hl ok">4.8</td></tr>
+          <tr><td>解读专业度</td><td class="no">2.1</td><td class="hl ok">4.9</td></tr>
+          <tr><td>多轮追问连贯性</td><td>2.8</td><td class="hl ok">4.7</td></tr>
+          <tr><td>情绪识别 / 共情</td><td>2.6</td><td class="hl ok">4.6</td></tr>
+          <tr><td>合规与安全边界</td><td>3.2</td><td class="hl ok">4.9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="chart-box h-[500px]"><canvas id="llmCompare"></canvas></div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>VS LLM</span><span>2026.04 · 12</span></div>
+</section>
+
+<!-- ========== 13 与真人对比 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">VS 真人玄学师傅 · vs Human</span></div>
+    <div class="chip">Chapter 04 · 04/04</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-3 gap-8 items-stretch">
+    <div class="col-span-2">
+      <h2 class="serif text-3xl text-gradient-gold leading-tight mb-5">真人不是对手 —— <br/>是我们的<span class="text-amber-100">"教师爷"</span></h2>
+      <table class="cmp">
+        <thead><tr><th>维度</th><th>真人玄学师傅</th><th>六壬 AI</th></tr></thead>
+        <tbody>
+          <tr><td>专业度</td><td>参差不齐 · 良莠混杂</td><td class="hl ok">头部师傅水平稳定输出</td></tr>
+          <tr><td>可用性</td><td class="no">需预约 · 排队 · 看心情</td><td class="ok">7×24 · 即问即答</td></tr>
+          <tr><td>价格</td><td class="no">¥50-2000+ / 次</td><td class="hl ok">¥3.5 / 次</td></tr>
+          <tr><td>隐私</td><td class="no">面对面 · 留信息</td><td class="ok">完全匿名 · 端到端加密</td></tr>
+          <tr><td>解读一致性</td><td>同卦不同解</td><td class="ok">基于知识库稳定输出</td></tr>
+          <tr><td>情绪陪伴</td><td>看师傅性格</td><td class="ok">系统化 CBT + 国学疗愈</td></tr>
+          <tr><td>合规风险</td><td class="no">易越界 · 政策风险</td><td class="ok">硬规则 · 关键词全拦截</td></tr>
+          <tr><td>规模化</td><td class="no">不可复制</td><td class="hl ok">边际成本 ≈ 0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="flex flex-col justify-center gap-4">
+      <div class="card-strong card text-center">
+        <div class="text-xs gold tracking-widest mb-2">PRICE · ADVANTAGE</div>
+        <div class="serif stat text-6xl text-gradient-gold">1/100</div>
+        <div class="text-sm text-amber-100/80 mt-3">单次价格仅为线下大师 1% 起</div>
+      </div>
+      <div class="card text-center">
+        <div class="text-xs gold tracking-widest mb-2">AVAILABILITY</div>
+        <div class="serif stat text-5xl text-gradient-gold">24×7</div>
+        <div class="text-sm text-amber-100/80 mt-2">凌晨 3 点的崩溃也能即时被听见</div>
+      </div>
+      <div class="card text-center">
+        <div class="text-xs gold tracking-widest mb-2">PRIVACY</div>
+        <div class="serif text-2xl text-gradient-gold">100% 匿名</div>
+        <div class="text-sm text-amber-100/80 mt-2">不收集身份证 · 手机号脱敏</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>VS Human Master</span><span>2026.04 · 13</span></div>
+</section>
+<!-- ========== 14 单次成本结构 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">单次毛利结构 · Unit Economics</span></div>
+    <div class="chip">Chapter 05 · 01/03</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-2 gap-10 items-center">
+    <div>
+      <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">UNIT · ECONOMICS</div>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-4">每一卦，<br/>都是一笔确定性现金流</h2>
+      <p class="text-sm text-amber-100/80 mb-6">300 次问答耗费推理成本 6 美元（≈ ¥42），即 <span class="hl">¥0.14 / 次</span>。在 ¥3.5 定价下：</p>
+      <table class="cmp mb-6">
+        <thead><tr><th>项目</th><th>金额</th><th>占比</th></tr></thead>
+        <tbody>
+          <tr><td>定价（用户支付）</td><td class="hl">¥3.50</td><td>100%</td></tr>
+          <tr><td>大模型推理成本</td><td>¥0.14</td><td>4.0%</td></tr>
+          <tr><td>语音/CDN/带宽</td><td>¥0.03</td><td>0.9%</td></tr>
+          <tr><td>支付通道（微信支付 0.6%）</td><td>¥0.02</td><td>0.6%</td></tr>
+          <tr style="background: rgba(212,175,55,.1);"><td class="hl">毛利</td><td class="hl">¥3.31</td><td class="hl">94.5%</td></tr>
+        </tbody>
+      </table>
+      <p class="text-xs text-amber-200/60 leading-relaxed">注：未计算分摊的服务器/算法备案/品牌投放成本；按规模化后稳态推算，模型蒸馏 + 国产卡（昇腾/寒武纪）部署后成本可再降 30%。</p>
+    </div>
+    <div class="chart-box h-[480px]"><canvas id="costChart"></canvas></div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>毛利结构 / Unit Economics</span><span>2026.04 · 14</span></div>
+</section>
+
+<!-- ========== 15 价格竞争力 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">价格竞争力 · Price Power</span></div>
+    <div class="chip">Chapter 05 · 02/03</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-5 gap-8 items-center">
+    <div class="col-span-2">
+      <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">PRICE · BENCHMARK</div>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-6">价格越低，<br/>渗透越深 —— 反向蓝海</h2>
+      <div class="space-y-3">
+        <div class="card flex justify-between items-center"><span class="serif">线下命理馆</span><span class="hl text-lg">¥200-2000+</span></div>
+        <div class="card flex justify-between items-center"><span class="serif">抖音真人大师</span><span class="hl text-lg">¥50-500</span></div>
+        <div class="card flex justify-between items-center"><span class="serif">问问 App 真人塔罗</span><span class="hl text-lg">¥15/分钟</span></div>
+        <div class="card flex justify-between items-center"><span class="serif">测测 App 单次</span><span class="hl text-lg">¥9-39</span></div>
+        <div class="card card-strong flex justify-between items-center"><span class="serif text-amber-100">六壬 AI（我们）</span><span class="text-gradient-gold serif text-2xl">¥3.5</span></div>
+      </div>
+      <p class="text-sm text-amber-100/75 mt-6 leading-relaxed">在多数用户的"<span class="hl">直觉付费区间</span>"（&lt; ¥10）以内，触发<span class="hl">无心理负担</span>的高频复购。</p>
+    </div>
+    <div class="col-span-3 chart-box h-[500px]"><canvas id="priceChart"></canvas></div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>价格竞争力 / Price</span><span>2026.04 · 15</span></div>
+</section>
+
+<!-- ========== 16 收入预测 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">12 个月收入预测 · Revenue Forecast</span></div>
+    <div class="chip">Chapter 05 · 03/03</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-5 gap-8 items-center">
+    <div class="col-span-3 chart-box h-[500px]"><canvas id="revenueChart"></canvas></div>
+    <div class="col-span-2 space-y-4">
+      <h2 class="serif text-3xl text-gradient-gold leading-tight">三档情景<br/>· 12M 累计收入</h2>
+      <table class="cmp">
+        <thead><tr><th>情景</th><th>M12 MAU</th><th>付费率</th><th>ARPPU</th><th>累计收入</th></tr></thead>
+        <tbody>
+          <tr><td>保守</td><td>50 万</td><td>4%</td><td>¥45</td><td class="hl">¥2700 万</td></tr>
+          <tr style="background: rgba(212,175,55,.1);"><td>中性</td><td>120 万</td><td>6%</td><td>¥58</td><td class="hl">¥7200 万</td></tr>
+          <tr><td>乐观</td><td>250 万</td><td>9%</td><td>¥72</td><td class="hl">¥1.85 亿</td></tr>
+        </tbody>
+      </table>
+      <div class="card card-strong">
+        <div class="text-xs gold tracking-widest mb-1">LTV / CAC（中性）</div>
+        <div class="flex items-baseline gap-3">
+          <span class="serif text-3xl text-gradient-gold">3.8 ×</span>
+          <span class="text-xs text-amber-200/65">健康线 ≥ 3.0×</span>
+        </div>
+        <div class="text-xs text-amber-100/75 mt-2 leading-relaxed">CAC ≈ ¥18（巨量/小红书混合）· LTV ≈ ¥68（24 个月留存）</div>
+      </div>
+      <p class="text-xs text-amber-200/60 leading-relaxed">注：未计入 B 端、会员订阅与年度运势大单的额外收入贡献，三者合计可再增 30-50%。</p>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>收入预测 / Forecast</span><span>2026.04 · 16</span></div>
+</section>
+
+<!-- ========== 17 多元变现 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">多元变现路径 · Monetization Map</span></div>
+    <div class="chip">Chapter 05 · Bonus</div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="text-center mb-8">
+      <h2 class="serif text-4xl text-gradient-gold mb-2">六脉变现 · 一卦六金</h2>
+      <p class="text-sm text-amber-200/65 tracking-widest">SIX · REVENUE · STREAMS</p>
+    </div>
+
+    <div class="grid grid-cols-3 gap-5">
+      <div class="card">
+        <div class="serif text-2xl gold mb-1">① 单次付费</div>
+        <div class="text-xs text-amber-200/60 mb-3 tracking-widest">PAY-PER-DRAW</div>
+        <div class="serif text-3xl text-gradient-gold mb-2">¥3.5 / 次</div>
+        <p class="text-xs text-amber-100/75">无门槛 · 高频心智 · 现金流主力</p>
+      </div>
+      <div class="card card-strong">
+        <div class="serif text-2xl gold mb-1">② 微信会员</div>
+        <div class="text-xs text-amber-200/60 mb-3 tracking-widest">MEMBERSHIP</div>
+        <div class="serif text-3xl text-gradient-gold mb-2">¥19.9 / ¥169</div>
+        <p class="text-xs text-amber-100/85">月卡/年卡，重度用户首选 · 提升 LTV</p>
+      </div>
+      <div class="card">
+        <div class="serif text-2xl gold mb-1">③ 年度运势</div>
+        <div class="text-xs text-amber-200/60 mb-3 tracking-widest">ANNUAL · REPORT</div>
+        <div class="serif text-3xl text-gradient-gold mb-2">¥99 / 份</div>
+        <p class="text-xs text-amber-100/75">春节大单 · 节日营销 · 礼品场景</p>
+      </div>
+      <div class="card">
+        <div class="serif text-2xl gold mb-1">④ 虚拟供品</div>
+        <div class="text-xs text-amber-200/60 mb-3 tracking-widest">VIRTUAL · GIFTS</div>
+        <div class="serif text-3xl text-gradient-gold mb-2">¥6 - ¥66</div>
+        <p class="text-xs text-amber-100/75">锦囊 · 朱砂符 · 数字开运摆件</p>
+      </div>
+      <div class="card">
+        <div class="serif text-2xl gold mb-1">⑤ 私域社群</div>
+        <div class="text-xs text-amber-200/60 mb-3 tracking-widest">COMMUNITY</div>
+        <div class="serif text-3xl text-gradient-gold mb-2">¥299 / 年</div>
+        <p class="text-xs text-amber-100/75">国学训练营 · 师傅 1v1 · 课程</p>
+      </div>
+      <div class="card card-strong">
+        <div class="serif text-2xl gold mb-1">⑥ B 端合作</div>
+        <div class="text-xs text-amber-200/60 mb-3 tracking-widest">B2B</div>
+        <div class="serif text-3xl text-gradient-gold mb-2">¥10w+</div>
+        <p class="text-xs text-amber-100/85">心理机构 · 文创 IP · 文旅景区 SaaS</p>
+      </div>
+    </div>
+
+    <div class="mt-8 card text-center">
+      <div class="text-sm text-amber-100/85">六大流将 12 个月营收上限拉至 <span class="serif text-3xl text-gradient-gold mx-2">¥2.5 亿+</span> · 单流销售依赖度 ≤ 45%，结构稳健</div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>变现路径 / Monetization</span><span>2026.04 · 17</span></div>
+</section>
+<!-- ========== 18 多端布局 + 获客 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">大陆上线策略 · GTM</span></div>
+    <div class="chip">Chapter 06 · 01/02</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-2 gap-8">
+    <div>
+      <h2 class="serif text-3xl text-gradient-gold mb-4">多端布局 · 流量优先级</h2>
+      <div class="space-y-3">
+        <div class="card flex items-center gap-4">
+          <div class="serif text-3xl gold w-10">1</div>
+          <div class="flex-1">
+            <div class="serif text-amber-100">微信小程序（首发）</div>
+            <div class="text-xs text-amber-200/65 mt-1">12 亿用户基本盘 · 0 门槛 · 视频号联动</div>
+          </div>
+          <span class="chip">D-30</span>
+        </div>
+        <div class="card flex items-center gap-4">
+          <div class="serif text-3xl gold w-10">2</div>
+          <div class="flex-1">
+            <div class="serif text-amber-100">H5 / 移动 Web</div>
+            <div class="text-xs text-amber-200/65 mt-1">小红书/知乎外链着陆 · 投放转化用</div>
+          </div>
+          <span class="chip">D-30</span>
+        </div>
+        <div class="card flex items-center gap-4">
+          <div class="serif text-3xl gold w-10">3</div>
+          <div class="flex-1">
+            <div class="serif text-amber-100">抖音小程序</div>
+            <div class="text-xs text-amber-200/65 mt-1">承接玄学直播 + 巨量引擎流量</div>
+          </div>
+          <span class="chip">D+45</span>
+        </div>
+        <div class="card flex items-center gap-4">
+          <div class="serif text-3xl gold w-10">4</div>
+          <div class="flex-1">
+            <div class="serif text-amber-100">iOS / Android 原生 App</div>
+            <div class="text-xs text-amber-200/65 mt-1">推送召回 · 留存 · 高 ARPPU 沉淀</div>
+          </div>
+          <span class="chip">D+90</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <h2 class="serif text-3xl text-gradient-gold mb-4">获客渠道矩阵</h2>
+      <div class="chart-box h-[420px]"><canvas id="channelChart"></canvas></div>
+      <div class="grid grid-cols-2 gap-3 mt-3">
+        <div class="card text-xs"><span class="hl serif">📕 内容种草</span><div class="text-amber-100/75 mt-1">小红书 / 抖音 / B 站 / 知乎</div></div>
+        <div class="card text-xs"><span class="hl serif">💬 私域裂变</span><div class="text-amber-100/75 mt-1">微信群 / 视频号 / 朋友圈</div></div>
+        <div class="card text-xs"><span class="hl serif">💰 付费投放</span><div class="text-amber-100/75 mt-1">巨量引擎 / 腾讯广告 / 聚光</div></div>
+        <div class="card text-xs"><span class="hl serif">⭐ KOL/KOC</span><div class="text-amber-100/75 mt-1">玄学 / 心理 / 情感博主</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>多端布局 / GTM</span><span>2026.04 · 18</span></div>
+</section>
+
+<!-- ========== 19 冷启动 + 内容话题 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">冷启动路径 · Cold Start</span></div>
+    <div class="chip">Chapter 06 · 02/02</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-2 gap-10 items-center">
+    <div class="chart-box h-[480px]"><canvas id="funnelChart"></canvas></div>
+    <div>
+      <h2 class="serif text-3xl text-gradient-gold mb-4">100 → 1,000 → 100K → 破圈</h2>
+      <div class="space-y-3">
+        <div class="card"><span class="serif gold">Stage 0 · 内测</span><div class="text-xs text-amber-100/75 mt-1">100 个种子用户（产品体验官 + 玄学 KOC），收集首批 NPS 与卦象准确率反馈</div></div>
+        <div class="card"><span class="serif gold">Stage 1 · 启动</span><div class="text-xs text-amber-100/75 mt-1">1,000 个 KOC 邀请合伙人，免费体验换 UGC 笔记，构建 5,000+ 真实社交资产</div></div>
+        <div class="card card-strong"><span class="serif gold">Stage 2 · 起量</span><div class="text-xs text-amber-100/85 mt-1">10w 种子流量来自小红书/B 站爆款长图文 + 微信视频号挑战赛 + 巨量引擎冷启包</div></div>
+        <div class="card"><span class="serif gold">Stage 3 · 破圈</span><div class="text-xs text-amber-100/75 mt-1">联动微博热搜 / 知乎专栏 / 抖音 #玄学搭子 话题，撬动 1000 万级曝光</div></div>
+      </div>
+      <div class="mt-5">
+        <div class="text-xs gold tracking-widest mb-2">CONTENT · HOOKS</div>
+        <div class="flex flex-wrap gap-2">
+          <span class="chip">#当代年轻人的电子木鱼</span>
+          <span class="chip">#AI 玄学</span>
+          <span class="chip">#国潮新解</span>
+          <span class="chip">#3 秒一卦</span>
+          <span class="chip">#掐指神算 AI 版</span>
+          <span class="chip">#打工人玄学陪伴</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>冷启动 / Cold Start</span><span>2026.04 · 19</span></div>
+</section>
+
+<!-- ========== 20 合规 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">合规与风险管理 · Compliance ★</span></div>
+    <div class="chip">Chapter 07 · 重点</div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="text-center mb-6">
+      <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-2">COMPLIANCE · IS · LIFELINE</div>
+      <h2 class="serif text-4xl text-gradient-gold">合规即生命线 —— 国内业务的零号优先级</h2>
+    </div>
+
+    <div class="grid grid-cols-4 gap-5">
+      <div class="card">
+        <div class="serif text-xl gold mb-2">① 资质合规</div>
+        <ul class="text-xs space-y-1.5 text-amber-100/80">
+          <li class="bullet">生成式 AI 服务备案</li>
+          <li class="bullet">深度合成算法备案</li>
+          <li class="bullet">ICP 备案 · 增值电信</li>
+          <li class="bullet">网络文化经营许可（按需）</li>
+          <li class="bullet">已聘合规法务顾问</li>
+        </ul>
+      </div>
+      <div class="card card-strong">
+        <div class="serif text-xl gold mb-2">② 内容合规</div>
+        <ul class="text-xs space-y-1.5 text-amber-100/85">
+          <li class="bullet">定位"<span class="hl">传统文化娱乐</span>"</li>
+          <li class="bullet">敏感词库：疾病/政治/灾祸</li>
+          <li class="bullet">禁封建迷信定性表述</li>
+          <li class="bullet">全屏免责声明（仅供娱乐）</li>
+          <li class="bullet">医疗/投资/婚姻不给确定性建议</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="serif text-xl gold mb-2">③ 数据合规</div>
+        <ul class="text-xs space-y-1.5 text-amber-100/80">
+          <li class="bullet">《个人信息保护法》</li>
+          <li class="bullet">《数据安全法》分级</li>
+          <li class="bullet">未成年人保护法</li>
+          <li class="bullet">数据本地化（境内云）</li>
+          <li class="bullet">完整用户协议 · 隐私政策</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="serif text-xl gold mb-2">④ 心理风险</div>
+        <ul class="text-xs space-y-1.5 text-amber-100/80">
+          <li class="bullet">抑郁/自杀关键词预警</li>
+          <li class="bullet">引导 12320 / 北京心理危机热线</li>
+          <li class="bullet">高危用户 24h 人工兜底</li>
+          <li class="bullet">情绪日志 · 风险分层</li>
+          <li class="bullet">合作三甲医院心理科</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-6 grid grid-cols-3 gap-5">
+      <div class="card">
+        <div class="text-xs gold tracking-widest mb-1">APPLE · APP · STORE</div>
+        <div class="text-xs text-amber-100/80 leading-relaxed">使用「文化体验/生活方式」类目，避用 fortune-telling 字样；ASA 关键词避坑表已就绪。</div>
+      </div>
+      <div class="card">
+        <div class="text-xs gold tracking-widest mb-1">国内安卓四大商店</div>
+        <div class="text-xs text-amber-100/80 leading-relaxed">华为 / 小米 / OPPO / vivo 均要求《生成式 AI 备案号》＋ 内容审核证明，已提前 30 天启动备案流程。</div>
+      </div>
+      <div class="card">
+        <div class="text-xs gold tracking-widest mb-1">微信 / 抖音 小程序</div>
+        <div class="text-xs text-amber-100/80 leading-relaxed">类目选择「工具 - 生活服务」+「教育文化」，主体审核已完成；运营内容自审 SOP 双人复核。</div>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>合规风险 / Compliance ★</span><span>2026.04 · 20</span></div>
+</section>
+<!-- ========== 21 竞争壁垒 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">竞争壁垒 · Moat</span></div>
+    <div class="chip">Chapter 08</div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="text-center mb-8">
+      <h2 class="serif text-4xl text-gradient-gold">五重护城河 · 越跑越深</h2>
+      <p class="text-sm text-amber-200/65 tracking-widest mt-2">FIVE · LAYERED · MOAT</p>
+    </div>
+    <div class="grid grid-cols-5 gap-5">
+      <div class="card text-center">
+        <div class="text-3xl mb-2">🔄</div>
+        <div class="serif text-amber-100 text-base mb-2">数据飞轮</div>
+        <div class="text-xs text-amber-100/75">真实问答数据反哺垂直模型，越用越准 · 网络效应</div>
+      </div>
+      <div class="card card-strong text-center">
+        <div class="text-3xl mb-2">📚</div>
+        <div class="serif text-amber-100 text-base mb-2">垂直知识库</div>
+        <div class="text-xs text-amber-100/85">15w 古籍语料 + 8w 解卦案例，专业度门槛 18 个月起</div>
+      </div>
+      <div class="card text-center">
+        <div class="text-3xl mb-2">💬</div>
+        <div class="serif text-amber-100 text-base mb-2">对话工程</div>
+        <div class="text-xs text-amber-100/75">多轮追问 + 情绪识别 prompt chain，工程化壁垒</div>
+      </div>
+      <div class="card text-center">
+        <div class="text-3xl mb-2">🛡️</div>
+        <div class="serif text-amber-100 text-base mb-2">合规先发</div>
+        <div class="text-xs text-amber-100/75">已完成生成式 AI 备案，新进入者需 6+ 月时间窗</div>
+      </div>
+      <div class="card text-center">
+        <div class="text-3xl mb-2">⚜️</div>
+        <div class="serif text-amber-100 text-base mb-2">品牌先发</div>
+        <div class="text-xs text-amber-100/75">"AI 玄学第一品牌"心智锁定，搜索流量自然垄断</div>
+      </div>
+    </div>
+
+    <div class="mt-10 chart-box h-[200px]"><canvas id="moatChart"></canvas></div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>竞争壁垒 / Moat</span><span>2026.04 · 21</span></div>
+</section>
+
+<!-- ========== 22 路线图 ========== -->
+<section class="slide">
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">路线图 · Roadmap</span></div>
+    <div class="chip">Chapter 09</div>
+  </div>
+
+  <div class="flex-1 flex flex-col justify-center">
+    <div class="text-center mb-8">
+      <h2 class="serif text-4xl text-gradient-gold">12 个月 · 四级火箭</h2>
+      <p class="text-sm text-amber-200/65 tracking-widest mt-2">FROM · 0 · TO · 200M · USERS</p>
+    </div>
+
+    <div class="relative">
+      <div class="absolute top-1/2 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-400/40 to-transparent"></div>
+      <div class="grid grid-cols-4 gap-6 relative">
+        <div class="card text-center">
+          <div class="text-xs gold tracking-widest mb-1">M1 · 启航</div>
+          <div class="serif text-2xl text-amber-100 mb-2">微信小程序首发</div>
+          <ul class="text-xs space-y-1 text-amber-100/75 text-left">
+            <li class="bullet">完成生成式 AI 备案</li>
+            <li class="bullet">小程序 + H5 上线</li>
+            <li class="bullet">1 万 DAU</li>
+            <li class="bullet">付费率 ≥ 3%</li>
+          </ul>
+        </div>
+        <div class="card card-strong text-center">
+          <div class="text-xs gold tracking-widest mb-1">M3 · 起量</div>
+          <div class="serif text-2xl text-amber-100 mb-2">10 万 MAU</div>
+          <ul class="text-xs space-y-1 text-amber-100/85 text-left">
+            <li class="bullet">启动会员制（19.9/月）</li>
+            <li class="bullet">抖音小程序上线</li>
+            <li class="bullet">月营收破 ¥300 万</li>
+            <li class="bullet">完成天使轮交割</li>
+          </ul>
+        </div>
+        <div class="card text-center">
+          <div class="text-xs gold tracking-widest mb-1">M6 · 扩品</div>
+          <div class="serif text-2xl text-amber-100 mb-2">50 万 MAU</div>
+          <ul class="text-xs space-y-1 text-amber-100/75 text-left">
+            <li class="bullet">iOS / Android App 全平台</li>
+            <li class="bullet">扩展塔罗 / 星座 / 紫微</li>
+            <li class="bullet">月营收破 ¥1500 万</li>
+            <li class="bullet">B 端首单签约</li>
+          </ul>
+        </div>
+        <div class="card text-center">
+          <div class="text-xs gold tracking-widest mb-1">M12 · 登顶</div>
+          <div class="serif text-2xl text-amber-100 mb-2">200 万 MAU</div>
+          <ul class="text-xs space-y-1 text-amber-100/75 text-left">
+            <li class="bullet">国内 AI 玄学第一品牌</li>
+            <li class="bullet">B 端 SaaS 全面商业化</li>
+            <li class="bullet">累计营收 ¥1.5 亿+</li>
+            <li class="bullet">A 轮启动</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-box h-[200px] mt-8"><canvas id="roadmapChart"></canvas></div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>路线图 / Roadmap</span><span>2026.04 · 22</span></div>
+</section>
+
+<!-- ========== 23 团队 + Ask ========== -->
+<section class="slide">
+  <div class="bagua-bg"></div>
+  <div class="star-field"></div>
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">团队 · 资源诉求 · Ask</span></div>
+    <div class="chip">Chapter 10</div>
+  </div>
+
+  <div class="flex-1 grid grid-cols-2 gap-10 items-center">
+    <div>
+      <div class="text-xs tracking-[0.4em] text-amber-200/60 mb-3">THE · TEAM</div>
+      <h2 class="serif text-4xl text-gradient-gold leading-tight mb-6">懂 AI 的国学匠人，<br/>懂国学的技术派</h2>
+      <div class="space-y-3">
+        <div class="card flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-amber-300/40 to-purple-700/40 border border-amber-300/50 flex items-center justify-center serif text-xl text-amber-100">CEO</div>
+          <div>
+            <div class="serif text-amber-100">创始人 / 产品</div>
+            <div class="text-xs text-amber-200/65 mt-1">前大厂 AI 产品负责人 · 国学修习 10 年 · 0→1 经验</div>
+          </div>
+        </div>
+        <div class="card flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-amber-300/40 to-purple-700/40 border border-amber-300/50 flex items-center justify-center serif text-xl text-amber-100">CTO</div>
+          <div>
+            <div class="serif text-amber-100">技术合伙人</div>
+            <div class="text-xs text-amber-200/65 mt-1">前头部 LLM 团队负责人 · 推理优化与对齐专家</div>
+          </div>
+        </div>
+        <div class="card flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-amber-300/40 to-purple-700/40 border border-amber-300/50 flex items-center justify-center serif text-xl text-amber-100">CMO</div>
+          <div>
+            <div class="serif text-amber-100">增长合伙人</div>
+            <div class="text-xs text-amber-200/65 mt-1">前小红书/抖音生活方式头部品牌操盘手</div>
+          </div>
+        </div>
+        <div class="card flex items-center gap-4">
+          <div class="w-14 h-14 rounded-full bg-gradient-to-br from-amber-300/40 to-purple-700/40 border border-amber-300/50 flex items-center justify-center serif text-xl text-amber-100">国师</div>
+          <div>
+            <div class="serif text-amber-100">首席命理顾问</div>
+            <div class="text-xs text-amber-200/65 mt-1">易经研究会理事 · 民俗文化领域省级非遗传承人</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="space-y-4">
+      <div class="card-strong card">
+        <div class="text-xs gold tracking-widest mb-1">FUNDING · ASK</div>
+        <div class="serif text-5xl text-gradient-gold mb-2">¥3000 万</div>
+        <div class="text-sm text-amber-100/85">天使 + Pre-A · 出让 12-15% · 估值 ¥2-2.5 亿</div>
+        <div class="text-xs text-amber-200/65 mt-2 leading-relaxed">人民币基金优先 · 偏好有内容/AI/国潮赛道资源方</div>
+      </div>
+      <div class="card">
+        <div class="text-xs gold tracking-widest mb-2">USE · OF · PROCEEDS</div>
+        <div class="space-y-2 text-sm text-amber-100/85">
+          <div class="flex justify-between"><span>· 模型 / 算力（垂直精调 + 国产卡部署）</span><span class="hl">35%</span></div>
+          <div class="flex justify-between"><span>· 用户增长 / 投放</span><span class="hl">30%</span></div>
+          <div class="flex justify-between"><span>· 团队扩张（25 人 → 60 人）</span><span class="hl">20%</span></div>
+          <div class="flex justify-between"><span>· 合规 / 法务 / 备案</span><span class="hl">8%</span></div>
+          <div class="flex justify-between"><span>· 储备金</span><span class="hl">7%</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="text-xs gold tracking-widest mb-2">RESOURCES · WANTED</div>
+        <ul class="text-xs space-y-1.5 text-amber-100/80">
+          <li class="bullet">微信 / 抖音 / 小红书生态资源</li>
+          <li class="bullet">心理咨询机构 / 文旅景区合作</li>
+          <li class="bullet">国学专家库 · 媒体公关</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>团队 / Ask</span><span>2026.04 · 23</span></div>
+</section>
+
+<!-- ========== 24 致谢 ========== -->
+<section class="slide">
+  <div class="bagua-bg"></div>
+  <div class="star-field"></div>
+  <div class="header">
+    <div class="flex items-center gap-3"><span class="serif gold">六壬 AI</span><span class="text-amber-200/30">|</span><span class="text-sm text-amber-100/70">Thank You</span></div>
+    <div class="chip">END</div>
+  </div>
+
+  <div class="flex-1 flex flex-col items-center justify-center text-center">
+    <div class="ring slow-spin mb-10">
+      <div class="ring-inner" style="animation: none;">
+        <svg viewBox="0 0 64 64" width="80" height="80" fill="none">
+          <circle cx="32" cy="32" r="30" stroke="#d4af37" stroke-width="1.2"/>
+          <path d="M32 2 a30 30 0 0 1 0 60 a15 15 0 0 1 0-30 a15 15 0 0 0 0-30 z" fill="#d4af37"/>
+          <circle cx="32" cy="17" r="3" fill="#0f0a1f"/>
+          <circle cx="32" cy="47" r="3" fill="#d4af37"/>
+        </svg>
+      </div>
+    </div>
+    <h1 class="serif text-7xl text-gradient-gold glow mb-4">谢 · 谢</h1>
+    <p class="serif text-2xl text-amber-100/85 mb-8">东方智慧 · AI 重塑 · 心灵陪伴</p>
+    <div class="qline mx-auto mb-8"></div>
+    <p class="text-base text-amber-100/70">让千年智慧 &nbsp;触手可及</p>
+    <div class="mt-12 flex items-center gap-10 text-xs text-amber-200/55 tracking-widest">
+      <span>CONTACT · ir@liuren.ai</span>
+      <span class="vline h-4"></span>
+      <span>WeChat · liuren-ai</span>
+      <span class="vline h-4"></span>
+      <span>2026.04 · CHINA · LAUNCH</span>
+    </div>
+  </div>
+  <div class="footer"><span>LIUREN AI · CONFIDENTIAL</span><span>END · Thank You</span><span>2026.04 · 24</span></div>
+</section>
+</div>
+
+<script>
+  const deck = document.getElementById('deck');
+  let cur = 0;
+  let slides = [];
+  let total = 0;
+  let lockScroll = false;
+
+  function buildDots() {
+    const c = document.getElementById('dots');
+    c.innerHTML = '';
+    for (let i = 0; i < total; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === cur ? ' on' : '');
+      d.onclick = () => go(i);
+      c.appendChild(d);
+    }
+  }
+  function render() {
+    slides.forEach((s, i) => {
+      s.classList.remove('active', 'prev');
+      if (i === cur) s.classList.add('active');
+      else if (i < cur) s.classList.add('prev');
+    });
+    document.getElementById('cur').textContent = (cur + 1).toString().padStart(2, '0');
+    document.getElementById('total').textContent = total.toString().padStart(2, '0');
+    document.querySelectorAll('#dots .dot').forEach((d, i) => d.classList.toggle('on', i === cur));
+  }
+  function go(i) {
+    cur = Math.max(0, Math.min(total - 1, i));
+    render();
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') { e.preventDefault(); go(cur + 1); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); go(cur - 1); }
+    else if (e.key === 'Home') go(0);
+    else if (e.key === 'End') go(total - 1);
+  });
+  window.addEventListener('wheel', e => {
+    if (lockScroll) return;
+    lockScroll = true;
+    if (e.deltaY > 30) go(cur + 1);
+    else if (e.deltaY < -30) go(cur - 1);
+    setTimeout(() => lockScroll = false, 700);
+  }, { passive: true });
+
+  function initSlides() {
+    slides = Array.from(document.querySelectorAll('.slide'));
+    total = slides.length;
+    buildDots();
+    render();
+  }
+
+  // Common chart defaults
+  function chartDefaults() {
+    Chart.defaults.color = 'rgba(244,236,216,.78)';
+    Chart.defaults.font.family = "'Noto Sans SC', sans-serif";
+    Chart.defaults.borderColor = 'rgba(212,175,55,.18)';
+  }
+
+  const GOLD = '#d4af37';
+  const GOLD_SOFT = 'rgba(212,175,55,0.6)';
+  const GOLD_FILL = 'rgba(212,175,55,0.25)';
+  const PURPLE = '#a78bfa';
+  const PURPLE_FILL = 'rgba(167,139,250,0.35)';
+  const JADE = '#6ee7b7';
+  const ROSE = '#fb7185';
+  const SKY = '#67e8f9';
+
+  function buildAllCharts() {
+    chartDefaults();
+
+    // 4 - radar value
+    new Chart(document.getElementById('radarValue'), {
+      type: 'radar',
+      data: {
+        labels: ['专业性', '情绪共情', '即时性', '价格友好', '合规安全', '社交分享', '多轮深度'],
+        datasets: [
+          { label: '六壬 AI', data: [95, 92, 99, 96, 95, 88, 90], backgroundColor: GOLD_FILL, borderColor: GOLD, pointBackgroundColor: GOLD, borderWidth: 2 },
+          { label: '通用大模型', data: [40, 55, 95, 100, 70, 60, 65], backgroundColor: PURPLE_FILL, borderColor: PURPLE, pointBackgroundColor: PURPLE, borderWidth: 2 },
+          { label: '真人玄学师', data: [70, 80, 30, 20, 35, 30, 70], backgroundColor: 'rgba(251,113,133,0.2)', borderColor: ROSE, pointBackgroundColor: ROSE, borderWidth: 2 },
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { color: '#f4ecd8' } } },
+        scales: { r: { angleLines: { color: 'rgba(212,175,55,.2)' }, grid: { color: 'rgba(212,175,55,.18)' }, pointLabels: { color: '#f4ecd8', font: { size: 12 } }, ticks: { display: false }, suggestedMin: 0, suggestedMax: 100 } }
+      }
+    });
+
+    // 6 - mental health bar
+    new Chart(document.getElementById('mentalChart'), {
+      type: 'bar',
+      data: {
+        labels: ['抑郁症患者(万)', '焦虑障碍(万)', '心理咨询师(万)', '渗透率(%)'],
+        datasets: [
+          { label: '中国大陆', data: [9500, 10000, 4.3, 0.8], backgroundColor: [GOLD, '#e8c970', '#a78bfa', '#fb7185'], borderRadius: 6 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+        plugins: { legend: { display: false }, title: { display: true, text: '中国心理健康市场关键数据', color: GOLD, font: { size: 14 } } },
+        scales: { x: { type: 'logarithmic', grid: { color: 'rgba(212,175,55,.1)' } }, y: { grid: { display: false } } }
+      }
+    });
+
+    // 7 - mystic market line
+    new Chart(document.getElementById('mysticChart'), {
+      type: 'bar',
+      data: {
+        labels: ['2020', '2021', '2022', '2023', '2024', '2025E', '2026E'],
+        datasets: [
+          { type: 'bar', label: '泛玄学市场规模 (亿元)', data: [380, 520, 690, 850, 1020, 1200, 1380], backgroundColor: GOLD_FILL, borderColor: GOLD, borderWidth: 2, borderRadius: 6 },
+          { type: 'line', label: 'Z 世代渗透率 (%)', data: [12, 18, 26, 34, 41, 48, 55], borderColor: PURPLE, backgroundColor: PURPLE_FILL, yAxisID: 'y1', tension: 0.4, pointRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { color: '#f4ecd8' } }, title: { display: true, text: '中国泛玄学市场 6 年增长曲线', color: GOLD, font: { size: 14 } } },
+        scales: {
+          x: { grid: { color: 'rgba(212,175,55,.08)' } },
+          y: { position: 'left', grid: { color: 'rgba(212,175,55,.08)' }, title: { display: true, text: '亿元', color: GOLD_SOFT } },
+          y1: { position: 'right', grid: { display: false }, title: { display: true, text: '%', color: PURPLE } }
+        }
+      }
+    });
+
+    // 8 - cultural trend
+    new Chart(document.getElementById('trendChart'), {
+      type: 'line',
+      data: {
+        labels: ['2020', '2021', '2022', '2023', '2024', '2025'],
+        datasets: [
+          { label: '抖音 #小六壬 播放量 (亿)', data: [0.5, 2.1, 6.8, 16, 28, 38], borderColor: GOLD, backgroundColor: GOLD_FILL, tension: 0.4, fill: true, pointRadius: 4, borderWidth: 2 },
+          { label: '小红书 #玄学 笔记数 (百万)', data: [0.8, 1.6, 3.2, 6.5, 9.8, 12], borderColor: PURPLE, backgroundColor: PURPLE_FILL, tension: 0.4, fill: true, pointRadius: 4, borderWidth: 2 },
+          { label: 'B 站 #易经 投稿数 (万)', data: [0.3, 0.6, 1.4, 2.8, 4.2, 5.6], borderColor: JADE, backgroundColor: 'rgba(110,231,183,0.2)', tension: 0.4, fill: true, pointRadius: 4, borderWidth: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { color: '#f4ecd8', boxWidth: 12 } }, title: { display: true, text: '主流平台国学/玄学内容指数级增长', color: GOLD, font: { size: 14 } } },
+        scales: { x: { grid: { color: 'rgba(212,175,55,.08)' } }, y: { type: 'logarithmic', grid: { color: 'rgba(212,175,55,.08)' } } }
+      }
+    });
+
+    // 9 - quadrant scatter
+    new Chart(document.getElementById('quadrantChart'), {
+      type: 'scatter',
+      data: {
+        datasets: [
+          { label: '六壬 AI', data: [{ x: 95, y: 96 }], backgroundColor: GOLD, borderColor: GOLD, pointRadius: 18, pointHoverRadius: 22 },
+          { label: '问问 真人', data: [{ x: 75, y: 30 }], backgroundColor: ROSE, pointRadius: 12 },
+          { label: '测测', data: [{ x: 55, y: 60 }], backgroundColor: PURPLE, pointRadius: 12 },
+          { label: '随身易经', data: [{ x: 65, y: 25 }], backgroundColor: JADE, pointRadius: 10 },
+          { label: '抖音玄学直播', data: [{ x: 70, y: 20 }], backgroundColor: '#f59e0b', pointRadius: 12 },
+          { label: '通用大模型', data: [{ x: 25, y: 80 }], backgroundColor: SKY, pointRadius: 14 },
+          { label: 'Soul 玄学', data: [{ x: 40, y: 50 }], backgroundColor: '#fbbf24', pointRadius: 10 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { color: '#f4ecd8', boxWidth: 12 } }, title: { display: true, text: '专业度 × 智能化 二维定位', color: GOLD, font: { size: 14 } } },
+        scales: {
+          x: { title: { display: true, text: '专业度 →', color: GOLD_SOFT }, min: 0, max: 100, grid: { color: 'rgba(212,175,55,.1)' } },
+          y: { title: { display: true, text: '智能化 / AI 化 →', color: GOLD_SOFT }, min: 0, max: 100, grid: { color: 'rgba(212,175,55,.1)' } }
+        }
+      }
+    });
+
+    // 12 - LLM compare radar
+    new Chart(document.getElementById('llmCompare'), {
+      type: 'radar',
+      data: {
+        labels: ['卦象识别', '解读专业', '多轮追问', '情绪识别', '合规安全', '速度'],
+        datasets: [
+          { label: '六壬 AI', data: [4.8, 4.9, 4.7, 4.6, 4.9, 4.8], backgroundColor: GOLD_FILL, borderColor: GOLD, borderWidth: 2, pointBackgroundColor: GOLD },
+          { label: '豆包', data: [1.5, 2.3, 3.0, 2.8, 3.5, 4.5], backgroundColor: 'rgba(96,165,250,0.2)', borderColor: '#60a5fa', borderWidth: 2 },
+          { label: '文心一言', data: [1.3, 2.0, 2.7, 2.4, 3.0, 4.2], backgroundColor: 'rgba(251,113,133,0.2)', borderColor: ROSE, borderWidth: 2 },
+          { label: 'DeepSeek', data: [1.6, 2.4, 3.2, 2.9, 3.3, 4.6], backgroundColor: 'rgba(110,231,183,0.2)', borderColor: JADE, borderWidth: 2 },
+          { label: 'Kimi', data: [1.4, 2.2, 3.1, 2.7, 3.2, 4.4], backgroundColor: 'rgba(167,139,250,0.2)', borderColor: PURPLE, borderWidth: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { color: '#f4ecd8', boxWidth: 12 } }, title: { display: true, text: '5 分制 · 内部盲测 1000 题', color: GOLD, font: { size: 14 } } },
+        scales: { r: { angleLines: { color: 'rgba(212,175,55,.2)' }, grid: { color: 'rgba(212,175,55,.18)' }, pointLabels: { color: '#f4ecd8' }, ticks: { display: false }, suggestedMin: 0, suggestedMax: 5 } }
+      }
+    });
+
+    // 14 - cost donut
+    new Chart(document.getElementById('costChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['毛利 ¥3.31', '推理成本 ¥0.14', '带宽/CDN ¥0.03', '支付通道 ¥0.02'],
+        datasets: [{
+          data: [3.31, 0.14, 0.03, 0.02],
+          backgroundColor: [GOLD, '#a78bfa', '#fb7185', '#67e8f9'],
+          borderColor: '#0f0a1f', borderWidth: 4
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, cutout: '62%',
+        plugins: { legend: { position: 'bottom', labels: { color: '#f4ecd8', boxWidth: 12 } }, title: { display: true, text: '单次 ¥3.5 毛利结构 · 毛利率 94.5%', color: GOLD, font: { size: 14 } } }
+      }
+    });
+
+    // 15 - price compare
+    new Chart(document.getElementById('priceChart'), {
+      type: 'bar',
+      data: {
+        labels: ['六壬 AI', '测测', '问问 1分钟', '抖音真人(低)', '问问 5分钟', '抖音真人(高)', '线下命理(高)'],
+        datasets: [{
+          label: '单次价格 (元)',
+          data: [3.5, 19, 15, 50, 75, 500, 2000],
+          backgroundColor: [GOLD, '#fbbf24', '#a78bfa', '#fb7185', '#fb7185', '#ef4444', '#dc2626'],
+          borderRadius: 8
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, title: { display: true, text: '一次解卦价格对比（人民币元，对数轴）', color: GOLD, font: { size: 14 } } },
+        scales: { y: { type: 'logarithmic', grid: { color: 'rgba(212,175,55,.08)' } }, x: { grid: { display: false } } }
+      }
+    });
+
+    // 16 - revenue forecast
+    const months = ['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12'];
+    new Chart(document.getElementById('revenueChart'), {
+      type: 'line',
+      data: {
+        labels: months,
+        datasets: [
+          { label: '保守', data: [50, 110, 200, 320, 450, 620, 820, 1050, 1320, 1620, 2000, 2700], borderColor: '#67e8f9', backgroundColor: 'rgba(103,232,249,0.1)', tension: 0.4, fill: false, borderWidth: 2 },
+          { label: '中性', data: [80, 200, 400, 720, 1100, 1600, 2200, 2950, 3850, 4900, 5950, 7200], borderColor: GOLD, backgroundColor: GOLD_FILL, tension: 0.4, fill: true, borderWidth: 3 },
+          { label: '乐观', data: [120, 320, 700, 1300, 2200, 3500, 5000, 7000, 9500, 12500, 15500, 18500], borderColor: ROSE, backgroundColor: 'rgba(251,113,133,0.1)', tension: 0.4, fill: false, borderWidth: 2 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { color: '#f4ecd8', boxWidth: 12 } }, title: { display: true, text: '12 个月累计收入预测（万元）', color: GOLD, font: { size: 14 } } },
+        scales: { y: { grid: { color: 'rgba(212,175,55,.08)' }, title: { display: true, text: '累计收入（万元）', color: GOLD_SOFT } }, x: { grid: { display: false } } }
+      }
+    });
+
+    // 18 - channel mix
+    new Chart(document.getElementById('channelChart'), {
+      type: 'doughnut',
+      data: {
+        labels: ['小红书种草', '抖音/巨量', '微信视频号 + 私域', '知乎 + B 站', 'KOL/KOC 联动', 'SEO + 应用商店'],
+        datasets: [{
+          data: [28, 26, 18, 12, 10, 6],
+          backgroundColor: [GOLD, '#fb7185', '#a78bfa', '#67e8f9', '#6ee7b7', '#fbbf24'],
+          borderColor: '#0f0a1f', borderWidth: 3
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'right', labels: { color: '#f4ecd8', boxWidth: 12, font: { size: 11 } } }, title: { display: true, text: '获客预算分配 (%)', color: GOLD, font: { size: 13 } } }
+      }
+    });
+
+    // 19 - funnel
+    new Chart(document.getElementById('funnelChart'), {
+      type: 'bar',
+      data: {
+        labels: ['曝光 1000 万', '点击 60 万', '注册 12 万', '首次卦 7.2 万', '付费 6500', '复购 4200'],
+        datasets: [{
+          label: '冷启动转化漏斗',
+          data: [10000000, 600000, 120000, 72000, 6500, 4200],
+          backgroundColor: ['rgba(212,175,55,0.85)', 'rgba(212,175,55,0.7)', 'rgba(212,175,55,0.6)', 'rgba(212,175,55,0.5)', 'rgba(212,175,55,0.4)', 'rgba(212,175,55,0.3)'],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+        plugins: { legend: { display: false }, title: { display: true, text: '冷启动 90 天转化漏斗（中性预估）', color: GOLD, font: { size: 14 } } },
+        scales: { x: { type: 'logarithmic', grid: { color: 'rgba(212,175,55,.08)' } }, y: { grid: { display: false } } }
+      }
+    });
+
+    // 21 - moat
+    new Chart(document.getElementById('moatChart'), {
+      type: 'bar',
+      data: {
+        labels: ['数据飞轮', '垂直知识库', '对话工程', '合规先发', '品牌先发'],
+        datasets: [
+          { label: '当前 (M0)', data: [40, 70, 65, 90, 30], backgroundColor: GOLD_FILL, borderColor: GOLD, borderWidth: 2, borderRadius: 4 },
+          { label: '12 月后 (M12)', data: [85, 92, 88, 95, 80], backgroundColor: GOLD, borderRadius: 4 }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { color: '#f4ecd8', boxWidth: 12 } }, title: { display: true, text: '五重护城河深度演进 (0-100)', color: GOLD, font: { size: 13 } } },
+        scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(212,175,55,.08)' }, max: 100 } }
+      }
+    });
+
+    // 22 - roadmap
+    new Chart(document.getElementById('roadmapChart'), {
+      type: 'line',
+      data: {
+        labels: ['M0','M1','M3','M6','M9','M12'],
+        datasets: [
+          { label: 'MAU (万)', data: [0, 3, 10, 50, 110, 200], borderColor: GOLD, backgroundColor: GOLD_FILL, tension: 0.4, fill: true, borderWidth: 3, pointRadius: 6, pointBackgroundColor: GOLD }
+        ]
+      },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { legend: { display: false }, title: { display: true, text: '12 个月 MAU 演进路径（万）', color: GOLD, font: { size: 13 } } },
+        scales: { x: { grid: { display: false } }, y: { grid: { color: 'rgba(212,175,55,.08)' } } }
+      }
+    });
+  }
+
+  window.addEventListener('load', () => {
+    initSlides();
+    buildAllCharts();
+  });
+</script>
+</body>
+</html>
